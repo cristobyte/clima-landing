@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClimaTecnología · Aire acondicionado, instalación y mantención certificada</title>
+<meta name="description" content="Calcula los BTU que necesita tu espacio y cotiza equipo + instalación con técnicos certificados SEC/TE1 en la Región Metropolitana. Garantía escrita de 3 años.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Figtree:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+<!-- ============================================================
+     Everything lives inside .ct-page so the CSS never leaks into
+     (or gets overridden by) a WordPress theme. Keep this wrapper.
+     ============================================================ -->
+<div class="ct-page" id="ct-top">
+
+  <header class="ct-header">
+    <div class="ct-shell ct-header__inner">
+      <a class="ct-header__brand" href="#ct-top">
+        <img src="assets/img/logo.png" alt="ClimaTecnología">
+      </a>
+      <button class="ct-header__toggle" type="button" data-ct-nav-toggle aria-expanded="false" aria-controls="ct-nav" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <nav class="ct-nav" id="ct-nav">
+        <a href="#calculadora">Calculadora</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#equipos">Equipos</a>
+        <a href="#proceso">Cómo trabajamos</a>
+        <a class="ct-btn ct-btn--accent ct-btn--sm" href="#cotizar">
+          <svg class="ct-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+          Escríbenos
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO + CALCULADORA -->
+  <section class="ct-hero">
+    <div class="ct-shell ct-hero__grid">
+      <div class="ct-hero__copy">
+        <p class="ct-pill">
+          <span class="ct-pill__icon"><svg class="ct-i" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8Z"/></svg></span>
+          5,0 en Google · +1.200 instalaciones en la RM
+        </p>
+        <h1 class="ct-h1">La temperatura justa, <span class="ct-blue">calculada</span> y <span class="ct-orange">bien instalada</span>.</h1>
+        <p class="ct-lead">Dinos los metros de tu espacio y te decimos exactamente qué equipo necesitas. Lo instalan técnicos certificados SEC, con garantía escrita de 3 años.</p>
+        <div class="ct-actions">
+          <a class="ct-btn ct-btn--accent" href="#cotizar">
+            <svg class="ct-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+            Cotizar por WhatsApp
+          </a>
+          <a class="ct-btn ct-btn--ghost" href="#servicios">Ver servicios</a>
+        </div>
+        <ul class="ct-checks ct-checks--row">
+          <li>Instaladores TE1 certificados</li>
+          <li>Cotización en 24 h</li>
+          <li>Garantía 3 años</li>
+        </ul>
+      </div>
+
+      <div class="ct-calc" id="calculadora">
+        <div class="ct-calc__head">
+          <span class="ct-badge-icon">
+            <svg class="ct-i ct-i--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h2M12 11h2M16 11h.01M8 15h2M12 15h2M16 15h.01M8 19h6"/></svg>
+          </span>
+          <div>
+            <h2 class="ct-calc__title">Calculadora de potencia</h2>
+            <p class="ct-calc__sub">Tres datos y sabes qué equipo pedir</p>
+          </div>
+        </div>
+
+        <div class="ct-calc__body">
+          <div class="ct-progress" data-ct-progress>
+            <div class="ct-progress__track"><div class="ct-progress__bar" data-ct-progress-bar></div></div>
+            <span class="ct-progress__label" data-ct-progress-label>Paso 1 de 3</span>
+          </div>
+
+          <!-- Paso 1 -->
+          <div class="ct-field" data-ct-step="0">
+            <label class="ct-field__label" for="ct-m2">
+              <span>¿Cuántos m² tiene el espacio?</span>
+              <output class="ct-field__value" id="ct-m2-out" for="ct-m2">24 m²</output>
+            </label>
+            <input class="ct-range" id="ct-m2" type="range" min="6" max="80" step="1" value="24">
+            <div class="ct-range__scale"><span>6 m²</span><span>80 m²</span></div>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="ct-field" data-ct-step="1">
+            <p class="ct-field__label">¿Cuánto sol recibe?</p>
+            <div class="ct-choices ct-choices--3" data-ct-group="sol" role="group" aria-label="Exposición al sol">
+              <button class="ct-choice" type="button" data-value="baja">Poco sol</button>
+              <button class="ct-choice is-active" type="button" data-value="media" aria-pressed="true">Sol medio</button>
+              <button class="ct-choice" type="button" data-value="alta">Mucho sol</button>
+            </div>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="ct-field" data-ct-step="2">
+            <p class="ct-field__label">¿Qué tipo de espacio es?</p>
+            <div class="ct-choices ct-choices--3" data-ct-group="uso" role="group" aria-label="Tipo de espacio">
+              <button class="ct-choice" type="button" data-value="dormitorio">Dormitorio</button>
+              <button class="ct-choice is-active" type="button" data-value="living" aria-pressed="true">Living</button>
+              <button class="ct-choice" type="button" data-value="oficina">Oficina</button>
+            </div>
+          </div>
+
+          <div class="ct-calc__nav" data-ct-nav-steps>
+            <button class="ct-btn ct-btn--ghost" type="button" data-ct-prev>Atrás</button>
+            <button class="ct-btn ct-btn--blue ct-btn--grow" type="button" data-ct-next>Siguiente</button>
+          </div>
+
+          <!-- Resultado -->
+          <div class="ct-result" data-ct-result hidden>
+            <p class="ct-result__kicker">Potencia recomendada</p>
+            <p class="ct-result__btu"><strong data-ct-btu>12.000</strong><span>BTU</span></p>
+            <p class="ct-result__text" data-ct-resumen></p>
+            <div class="ct-result__card">
+              <div class="ct-result__row">
+                <span class="ct-result__muted">Equipo sugerido</span>
+                <span class="ct-result__muted" data-ct-count></span>
+              </div>
+              <p class="ct-result__model" data-ct-model></p>
+              <div class="ct-result__row">
+                <span data-ct-cover></span>
+                <strong data-ct-price></strong>
+              </div>
+            </div>
+            <a class="ct-btn ct-btn--accent ct-btn--block" href="#cotizar" data-ct-result-cta>
+              <svg class="ct-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+              Cotizar equipo + instalación
+            </a>
+            <button class="ct-btn ct-btn--outline-light ct-btn--block" type="button" data-ct-restart>
+              <svg class="ct-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+              Volver al paso 1
+            </button>
+          </div>
+          <p class="ct-note" data-ct-disclaimer hidden>Cálculo referencial. La visita técnica confirma la carga real antes de cotizar — sin costo y sin compromiso.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="ct-shell ct-stats">
+    <div class="ct-stat"><p class="ct-stat__n">5,0</p><p class="ct-stat__t">en Google Reviews</p></div>
+    <div class="ct-stat"><p class="ct-stat__n">+1.200</p><p class="ct-stat__t">instalaciones ejecutadas</p></div>
+    <div class="ct-stat"><p class="ct-stat__n">SEC · TE1</p><p class="ct-stat__t">instaladores certificados</p></div>
+    <div class="ct-stat"><p class="ct-stat__n">3 años</p><p class="ct-stat__t">de garantía escrita</p></div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="ct-shell ct-section" id="servicios">
+    <div class="ct-section__head">
+      <p class="ct-kicker">Servicios</p>
+      <h2 class="ct-h2">Tres cosas hacemos, y las hacemos completas</h2>
+      <p class="ct-lead ct-lead--sm">Vendemos, instalamos y mantenemos. Sin subcontratos anónimos: el mismo equipo que cotiza es el que llega a tu casa.</p>
+    </div>
+    <div class="ct-grid ct-grid--3">
+      <article class="ct-card">
+        <span class="ct-badge-icon ct-badge-icon--lg">
+          <svg class="ct-i ct-i--xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h20v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2Z"/><path d="M4 9V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M7 17v2M17 17v2M8 13h8"/></svg>
+        </span>
+        <h3 class="ct-h3">Instalación</h3>
+        <p class="ct-body">Split muro, cassette o piso-cielo. Cañería de cobre, vacío con bomba, prueba de estanqueidad y puesta en marcha frente al cliente.</p>
+        <ul class="ct-checks">
+          <li>Visita técnica previa sin costo</li>
+          <li>Ejecución en 1 día hábil</li>
+          <li>Garantía de 3 años sobre la instalación</li>
+        </ul>
+        <a class="ct-link" href="#cotizar" data-ct-servicio="Instalación">Cotizar instalación <span aria-hidden="true">→</span></a>
+      </article>
+
+      <article class="ct-card">
+        <span class="ct-badge-icon ct-badge-icon--lg">
+          <svg class="ct-i ct-i--xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 0-10-10"/><path d="M2 12h4l2-5 3 10 2.5-7 1.8 4H22"/></svg>
+        </span>
+        <h3 class="ct-h3">Mantención preventiva</h3>
+        <p class="ct-body">Lavado químico de evaporador y condensador, revisión de presiones, drenaje y consumo. Dos veces al año separa un equipo de diez años de uno de cuatro.</p>
+        <ul class="ct-checks">
+          <li>Informe con mediciones por equipo</li>
+          <li>Planes para hogar, oficina y edificios</li>
+          <li>Te avisamos cuándo toca la próxima</li>
+        </ul>
+        <a class="ct-link" href="#cotizar" data-ct-servicio="Mantención">Agendar mantención <span aria-hidden="true">→</span></a>
+      </article>
+
+      <article class="ct-card">
+        <span class="ct-badge-icon ct-badge-icon--lg ct-badge-icon--warm">
+          <svg class="ct-i ct-i--xl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5l-9.4 9.4a2.8 2.8 0 0 1-4-4Z"/><path d="m18 2 4 4"/></svg>
+        </span>
+        <h3 class="ct-h3">Reparación y urgencias</h3>
+        <p class="ct-body">Diagnóstico, detección de fugas, recarga de gas, cambio de tarjeta o compresor. Te decimos qué falla, qué cuesta y si conviene repararlo antes de tocar nada.</p>
+        <ul class="ct-checks">
+          <li>Respuesta el mismo día en la RM</li>
+          <li>Diagnóstico con presupuesto cerrado</li>
+          <li>Atendemos cualquier marca</li>
+        </ul>
+        <a class="ct-link ct-link--warm" href="#cotizar" data-ct-servicio="Reparación">Reportar una falla <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="ct-band" id="proceso">
+    <div class="ct-shell ct-section">
+      <div class="ct-section__head">
+        <p class="ct-kicker">Cómo trabajamos</p>
+        <h2 class="ct-h2">Del mensaje a la garantía, en cuatro pasos</h2>
+      </div>
+      <div class="ct-grid ct-grid--4">
+        <article class="ct-step">
+          <div class="ct-step__top"><span class="ct-step__n">1</span><span class="ct-tag">15 min</span></div>
+          <h3 class="ct-h4">Nos escribes</h3>
+          <p class="ct-body ct-body--sm">Te contesta una persona, no un bot. Te damos un rango de precio antes de ir.</p>
+        </article>
+        <article class="ct-step">
+          <div class="ct-step__top"><span class="ct-step__n">2</span><span class="ct-tag">24–48 h</span></div>
+          <h3 class="ct-h4">Visita y cotización</h3>
+          <p class="ct-body ct-body--sm">Medimos en terreno y entregamos presupuesto cerrado, con materiales detallados.</p>
+        </article>
+        <article class="ct-step">
+          <div class="ct-step__top"><span class="ct-step__n">3</span><span class="ct-tag">1 día</span></div>
+          <h3 class="ct-h4">Instalación certificada</h3>
+          <p class="ct-body ct-body--sm">La ejecuta un instalador TE1, con protocolo de puesta en marcha firmado.</p>
+        </article>
+        <article class="ct-step">
+          <div class="ct-step__top"><span class="ct-step__n">4</span><span class="ct-tag">3 años</span></div>
+          <h3 class="ct-h4">Garantía y mantención</h3>
+          <p class="ct-body ct-body--sm">Garantía escrita y aviso de mantención cada seis meses, sin que tengas que acordarte.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPOS -->
+  <section class="ct-shell ct-section" id="equipos">
+    <div class="ct-section__head ct-section__head--split">
+      <div>
+        <p class="ct-kicker">Equipos</p>
+        <h2 class="ct-h2">Filtra por la potencia que te salió</h2>
+      </div>
+      <p class="ct-body">Todos inverter, de marcas oficiales. El precio parte en el equipo; la instalación se cotiza aparte.</p>
+    </div>
+    <div class="ct-filters" data-ct-filters role="group" aria-label="Filtrar equipos por potencia"></div>
+    <div class="ct-grid ct-grid--cards" data-ct-equipos></div>
+  </section>
+
+  <!-- CONFIANZA / FOTOS -->
+  <section class="ct-shell ct-section ct-trust">
+    <div>
+      <p class="ct-kicker">Confianza</p>
+      <h2 class="ct-h2">Trabajos reales, no renders</h2>
+      <p class="ct-body">Cada instalación queda fotografiada y documentada: recorrido de cañería, soportes, sellos y prueba de vacío. Si algo se ve mal en la foto, se corrige antes de facturar.</p>
+      <ul class="ct-checks">
+        <li>Instaladores con credencial TE1 vigente</li>
+        <li>Boleta o factura y garantía escrita</li>
+        <li>Distribuidores oficiales de las marcas que vendemos</li>
+      </ul>
+    </div>
+    <!-- Sube las fotos a assets/img/ y añade dentro de cada <figure>:
+         <img src="assets/img/instalacion-1.jpg" alt="..." loading="lazy">
+         Sin <img>, la figura muestra el marcador punteado con su descripción. -->
+    <div class="ct-photos">
+      <figure class="ct-photo ct-photo--tall" data-label="Foto de instalación (vertical)"></figure>
+      <div class="ct-photos__col">
+        <figure class="ct-photo" data-label="Equipo instalado"></figure>
+        <figure class="ct-photo" data-label="Técnico trabajando"></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIO + MARCAS -->
+  <section class="ct-dark">
+    <div class="ct-shell ct-dark__grid">
+      <div>
+        <div class="ct-stars" aria-label="5 de 5 estrellas">
+          <svg class="ct-i" viewBox="0 0 24 24" fill="#ffb800"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8Z"/></svg>
+          <svg class="ct-i" viewBox="0 0 24 24" fill="#ffb800"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8Z"/></svg>
+          <svg class="ct-i" viewBox="0 0 24 24" fill="#ffb800"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8Z"/></svg>
+          <svg class="ct-i" viewBox="0 0 24 24" fill="#ffb800"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8Z"/></svg>
+          <svg class="ct-i" viewBox="0 0 24 24" fill="#ffb800"><path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.3 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8Z"/></svg>
+        </div>
+        <blockquote class="ct-quote">“Cotizaron el jueves, instalaron el sábado y dejaron el departamento más limpio de lo que estaba. El técnico me explicó cómo usar el modo eco sin que se lo preguntara.”</blockquote>
+        <p class="ct-quote__by">Carolina M. · Ñuñoa · reseña de Google</p>
+      </div>
+      <div>
+        <p class="ct-kicker ct-kicker--light">Marcas oficiales</p>
+        <ul class="ct-brands">
+          <li>Samsung</li><li>Midea</li><li>Hisense</li><li>LG</li><li>TCL</li><li>Anwo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- COTIZAR -->
+  <section class="ct-shell ct-section ct-cta" id="cotizar">
+    <div>
+      <p class="ct-kicker">Cotización</p>
+      <h2 class="ct-h2">Cuéntanos qué necesitas</h2>
+      <p class="ct-lead ct-lead--sm">Completa y se arma solo el mensaje de WhatsApp con los datos que el técnico necesita. Contestamos en 15 minutos en horario hábil.</p>
+      <ul class="ct-contact">
+        <li>
+          <span class="ct-badge-icon"><svg class="ct-i ct-i--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg></span>
+          <span><strong>WhatsApp</strong><a href="#" data-ct-wa-link>+56 9 1234 5678</a></span>
+        </li>
+        <li>
+          <span class="ct-badge-icon"><svg class="ct-i ct-i--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <span><strong>Horario</strong>Lun a Vie 9:00–18:30 · Sáb 10:00–14:00</span>
+        </li>
+        <li>
+          <span class="ct-badge-icon"><svg class="ct-i ct-i--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span><strong>Cobertura</strong>Toda la Región Metropolitana</span>
+        </li>
+      </ul>
+    </div>
+
+    <form class="ct-form" data-ct-form novalidate>
+      <p class="ct-field__label">¿Qué necesitas?</p>
+      <div class="ct-choices ct-choices--auto" data-ct-group="servicio" role="group" aria-label="Servicio requerido">
+        <button class="ct-choice is-active" type="button" data-value="Instalación" aria-pressed="true">Instalación</button>
+        <button class="ct-choice" type="button" data-value="Mantención">Mantención</button>
+        <button class="ct-choice" type="button" data-value="Reparación">Reparación</button>
+        <button class="ct-choice" type="button" data-value="Solo equipo">Solo equipo</button>
+      </div>
+
+      <div class="ct-form__grid">
+        <p class="ct-input-wrap"><label for="f-nombre">Nombre</label><input class="ct-input" id="f-nombre" name="nombre" type="text" placeholder="Tu nombre" autocomplete="name"></p>
+        <p class="ct-input-wrap"><label for="f-fono">Teléfono</label><input class="ct-input" id="f-fono" name="fono" type="tel" placeholder="+56 9 ..." autocomplete="tel"></p>
+        <p class="ct-input-wrap"><label for="f-comuna">Comuna</label><input class="ct-input" id="f-comuna" name="comuna" type="text" placeholder="Ñuñoa, Las Condes..." autocomplete="address-level2"></p>
+        <p class="ct-input-wrap"><label for="f-m2">Superficie (m²)</label><input class="ct-input" id="f-m2" name="m2" type="number" min="4" max="400" placeholder="24"></p>
+      </div>
+
+      <p class="ct-input-wrap"><label for="f-msg">Detalle (opcional)</label><textarea class="ct-input ct-input--area" id="f-msg" name="detalle" placeholder="Piso 8, muro poniente, ya tengo el equipo comprado..."></textarea></p>
+
+      <div class="ct-preview">
+        <p class="ct-preview__title">
+          <svg class="ct-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+          Vista previa del mensaje
+        </p>
+        <p class="ct-preview__text" data-ct-preview></p>
+      </div>
+
+      <button class="ct-btn ct-btn--wa ct-btn--block" type="submit">
+        <svg class="ct-i ct-i--lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+        Enviar por WhatsApp
+      </button>
+      <p class="ct-note ct-note--center">Se abre WhatsApp con el mensaje ya escrito. No guardamos tus datos en el sitio.</p>
+    </form>
+  </section>
+
+  <footer class="ct-footer">
+    <div class="ct-shell ct-footer__inner">
+      <img src="assets/img/logo.png" alt="ClimaTecnología">
+      <p>Climatización certificada SEC · Región Metropolitana</p>
+      <p><a href="#calculadora">Calculadora</a> · <a href="#servicios">Servicios</a> · <a href="#cotizar">Cotizar</a></p>
+    </div>
+  </footer>
+
+  <a class="ct-fab" href="#" data-ct-wa-link aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.9-.9L3 21l2-4.9A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/></svg>
+  </a>
+</div>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
