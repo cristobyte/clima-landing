@@ -16,3 +16,6 @@
 # Logs y temporales
 *.log
 tmp/
+
+# Salida de build.sh (el .zip se regenera, no se versiona)
+dist/

@@ -323,3 +323,25 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
   .ct-page *, .ct-page *::before, .ct-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* ============================================================
+   Reset del documento.
+   La landing no hereda estilos de nadie: en WordPress se desencola todo el CSS
+   ajeno, y aquí se neutraliza el margen que el navegador da a <body> por defecto,
+   para que index.html y la página de WordPress se rendericen igual.
+   ============================================================ */
+body { margin: 0; padding: 0; overflow-x: hidden; background: #fff; }
+
+/* ============================================================
+   WordPress — plantilla a pantalla completa (body.ct-fullscreen).
+   Inerte fuera de WordPress: index.html no lleva esa clase.
+   ============================================================ */
+/* La barra de administración es fixed y taparía el header sticky (top: 0). */
+body.ct-fullscreen.admin-bar .ct-header { top: 32px; }
+@media screen and (max-width: 782px) {
+  body.ct-fullscreen.admin-bar .ct-header { top: 46px; }
+}
+/* A partir de aquí WordPress la vuelve position: absolute y ya no estorba. */
+@media screen and (max-width: 600px) {
+  body.ct-fullscreen.admin-bar .ct-header { top: 0; }
+}
