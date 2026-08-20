@@ -23,6 +23,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Si una segunda copia del plugin acaba instalada (otra carpeta, un zip subido dos veces),
+ * la segunda se encuentra las constantes y las clases ya definidas y no hace nada. Sin estas
+ * guardas, PHP aborta con «Cannot declare class …» y ese fatal tumba el sitio entero — panel
+ * incluido—, no solo la landing.
+ */
+if ( defined( 'CT_LANDING_VER' ) ) {
+	return;
+}
+
 define( 'CT_LANDING_VER', '1.0.0' );
 define( 'CT_LANDING_FILE', __FILE__ );
 define( 'CT_LANDING_DIR', plugin_dir_path( __FILE__ ) );
@@ -34,5 +44,7 @@ define( 'CT_LANDING_TEMPLATE', 'ct-fullscreen' );
 require_once CT_LANDING_DIR . 'includes/class-ct-settings.php';
 require_once CT_LANDING_DIR . 'includes/class-ct-template.php';
 
-CT_Landing_Settings::init();
-CT_Landing_Template::init();
+if ( class_exists( 'CT_Landing_Settings' ) && class_exists( 'CT_Landing_Template' ) ) {
+	CT_Landing_Settings::init();
+	CT_Landing_Template::init();
+}

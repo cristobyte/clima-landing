@@ -27,6 +27,9 @@ class CT_Landing_Template {
 	 */
 	private static $preservar = array( 'admin-bar', 'dashicons' );
 
+	/** Resultado de es_nuestra_pagina() una vez resuelto: null = todavía sin resolver. */
+	private static $es_nuestra = null;
+
 	public static function init() {
 		add_filter( 'theme_page_templates', array( __CLASS__, 'registrar_plantilla' ) );
 		add_filter( 'template_include', array( __CLASS__, 'cargar_plantilla' ), 99 );
@@ -36,13 +39,36 @@ class CT_Landing_Template {
 		add_filter( 'print_styles_array', array( __CLASS__, 'filtrar_estilos' ) );
 	}
 
-	/** ¿La petición actual es la página con nuestra plantilla? */
+	/**
+	 * ¿La petición actual es la página con nuestra plantilla?
+	 *
+	 * Es la guarda de la que cuelgan todos los hooks del plugin, y se consulta varias veces
+	 * por petición, así que:
+	 *
+	 * - En el panel y en peticiones sin consulta principal (AJAX, REST, WP-CLI) responde que
+	 *   no sin llegar a tocar los condicionales. Llamar a is_page() antes de la acción 'wp'
+	 *   devuelve un resultado sin sentido y provoca un _doing_it_wrong.
+	 * - El resultado se memoriza; antes de 'wp' no se memoriza nada, porque entonces la
+	 *   respuesta «no» es provisional.
+	 */
 	public static function es_nuestra_pagina() {
-		if ( ! is_page() ) {
+		if ( null !== self::$es_nuestra ) {
+			return self::$es_nuestra;
+		}
+
+		if ( is_admin() || ! did_action( 'wp' ) ) {
 			return false;
 		}
 
-		return CT_LANDING_TEMPLATE === get_page_template_slug( get_queried_object_id() );
+		if ( ! is_page() ) {
+			self::$es_nuestra = false;
+
+			return false;
+		}
+
+		self::$es_nuestra = ( CT_LANDING_TEMPLATE === get_page_template_slug( get_queried_object_id() ) );
+
+		return self::$es_nuestra;
 	}
 
 	/** Añade la plantilla al selector de Atributos de página, sea cual sea el tema. */

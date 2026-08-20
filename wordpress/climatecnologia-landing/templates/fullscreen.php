@@ -32,7 +32,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class( 'ct-fullscreen' ); ?>>
 <?php wp_body_open(); ?>
 
-<?php require CT_LANDING_DIR . 'templates/parts/landing-markup.php'; ?>
+<?php
+// El markup lo genera build.sh a partir de index.html. Si el zip se armó a mano y esa parte
+// falta, la página sale vacía en vez de con un error 500.
+$ct_parte = CT_LANDING_DIR . 'templates/parts/landing-markup.php';
+if ( file_exists( $ct_parte ) ) {
+	require $ct_parte;
+}
+?>
 
 <?php wp_footer(); ?>
 </body>
