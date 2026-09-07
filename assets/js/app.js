@@ -93,8 +93,10 @@
     if (elNavSteps) elNavSteps.hidden = !pasosMode || enResultado;
     if (elPrev) elPrev.disabled = state.paso === 0;
     if (elNext) elNext.textContent = state.paso === 2 ? "Ver resultado" : "Siguiente";
-    if (elBar) elBar.style.width = Math.round((Math.min(state.paso, 3) / 3) * 100) + "%";
-    if (elProgLabel) elProgLabel.textContent = "Paso " + Math.min(state.paso + 1, 3) + " de 3";
+    var MIN_PROGRESO = 5; // % visible en el paso 1, antes de que el usuario avance
+    var avance = Math.min(state.paso, 3) / 3;                      // 0 · 0.33 · 0.67 · 1
+    var pct = MIN_PROGRESO + avance * (100 - MIN_PROGRESO);        // 5 · 37 · 68 · 100
+    if (elBar) elBar.style.width = Math.round(pct) + "%";    if (elProgLabel) elProgLabel.textContent = "Paso " + Math.min(state.paso + 1, 3) + " de 3";
     if (elRestart) elRestart.hidden = !pasosMode;
     if (elResult) elResult.hidden = !enResultado;
     if (elDisclaimer) elDisclaimer.hidden = !enResultado;

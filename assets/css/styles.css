@@ -43,6 +43,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 }
 .ct-page *, .ct-page *::before, .ct-page *::after { box-sizing: border-box; }
 .ct-page h1, .ct-page h2, .ct-page h3, .ct-page h4 { font-family: var(--ct-font-head); letter-spacing: -0.03em; margin: 0; }
+.ct-page h1 { margin: 40px 0; }
 .ct-page p, .ct-page ul, .ct-page figure, .ct-page blockquote { margin: 0; }
 .ct-page ul { list-style: none; padding: 0; }
 .ct-page img { max-width: 100%; display: block; }
@@ -115,15 +116,20 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-hero__copy { min-width: 0; }
 .ct-pill {
   display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1px solid #dfe9f4;
-  border-radius: 999px; padding: 7px 15px 7px 9px; font-size: 14px; font-weight: 600; color: var(--ct-ink-2);
+  border-radius: 999px; padding: 7px 15px 7px 9px; font-size: 18px; font-weight: 600; color: var(--ct-ink-2);
   box-shadow: 0 4px 14px -8px rgba(10,31,53,.25);
 }
 .ct-pill__icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ct-orange-soft); color: var(--ct-orange-cta-dark); }
 .ct-pill__icon .ct-i { width: 13px; height: 13px; }
 .ct-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 30px 0 34px; }
 
+a.ct-btn--accent { color: var(--ct-bg-soft) }
+a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
+.ct-btn--accent { background-color: var(--ct-wa) }
+.ct-btn--accent:hover { background-color: var(--ct-wa-dark) }
+
 /* ---------- Listas con check ---------- */
-.ct-checks { display: grid; gap: 9px; margin: 0 0 22px; }
+.ct-checks { display: grid; gap: 9px; margin: 40px 0 22px; }
 .ct-checks li { display: flex; gap: 9px; font-size: 15px; color: var(--ct-ink-2); }
 .ct-checks li::before {
   content: ""; flex: none; width: 18px; height: 18px; margin-top: 3px;
@@ -131,7 +137,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
 }
-.ct-checks--row { display: flex; flex-wrap: wrap; gap: 10px 22px; padding-top: 24px; border-top: 1px solid #e6edf5; margin-bottom: 0; }
+.ct-checks--row { display: inline !important; padding-top: 20px !important; margin-top: 60px !important; display: flex; flex-wrap: wrap; gap: 10px 22px; padding-top: 24px; border-top: 1px solid #e6edf5; margin-bottom: 0; }
 .ct-checks--row li { font-weight: 500; color: #4c6480; align-items: center; }
 .ct-checks--row li::before { margin-top: 0; }
 
@@ -155,7 +161,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
 .ct-progress[hidden] { display: none; }
 .ct-progress__track { flex: 1; height: 5px; border-radius: 999px; background: #e6edf5; overflow: hidden; }
-.ct-progress__bar { height: 100%; border-radius: 999px; background: var(--ct-blue); width: 0; transition: width 220ms ease-out; }
+.ct-progress__bar { height: 100%; border-radius: 999px; background: var(--ct-wa); width: 5%; transition: width 220ms ease-out; }
 .ct-progress__label { font-size: 13px; font-weight: 600; color: var(--ct-ink-3); white-space: nowrap; }
 
 .ct-field { margin-bottom: 26px; }
@@ -331,7 +337,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
    para que index.html y la página de WordPress se rendericen igual.
    ============================================================ */
 body { margin: 0; padding: 0; overflow-x: hidden; background: #fff; }
-
+body { margin: 0 }
 /* ============================================================
    WordPress — plantilla a pantalla completa (body.ct-fullscreen).
    Inerte fuera de WordPress: index.html no lleva esa clase.
