@@ -137,7 +137,7 @@
       btn.classList.add("is-active");
       btn.setAttribute("aria-pressed", "true");
       state[key] = btn.getAttribute("data-value");
-      if (key === "servicio") pintarPreview(); else pintarCalculadora();
+      if (key === "servicio") { pintarCamposServicio(); pintarPreview(); } else pintarCalculadora();
     });
   });
 
@@ -210,23 +210,34 @@
       b.classList.toggle("is-active", on);
       if (on) b.setAttribute("aria-pressed", "true"); else b.removeAttribute("aria-pressed");
     });
+    pintarCamposServicio();
   }
 
   /* ---------- 7. Formulario → WhatsApp ---------- */
   var form = $("[data-ct-form]"), elPreview = $("[data-ct-preview]");
+  var elM2Wrap = $("[data-ct-m2]");
+
+  // Mantencion y reparacion son sobre un equipo ya instalado: los m2 no aportan
+  // nada ni al formulario ni al mensaje.
+  var SERVICIOS_SIN_M2 = ["Mantención", "Reparación"];
+
+  function pideM2() { return SERVICIOS_SIN_M2.indexOf(state.servicio) === -1; }
+
+  function pintarCamposServicio() { if (elM2Wrap) elM2Wrap.hidden = !pideM2(); }
 
   function armarMensaje() {
     var v = function (id) { var el = $(id); return el ? el.value.trim() : ""; };
+    var conM2 = pideM2();
     var m2Form = Number(v("#f-m2"));
     var m2 = m2Form > 0 ? m2Form : state.m2;
-    var r = calcular(m2);
+    var r = conM2 ? calcular(m2) : null;
     return [
       "Hola ClimaTecnología, necesito: " + state.servicio + ".",
       v("#f-nombre") ? "Soy " + v("#f-nombre") + "." : "Soy [tu nombre].",
       v("#f-comuna") ? "Estoy en " + v("#f-comuna") + "." : "Estoy en [tu comuna].",
-      "El espacio tiene unos " + m2 + " m².",
-      r.excede ? "Por la superficie probablemente necesito más de un equipo."
-               : "Según la calculadora necesito " + miles(r.btu) + " BTU.",
+      conM2 ? "El espacio tiene unos " + m2 + " m²." : "",
+      conM2 ? (r.excede ? "Por la superficie probablemente necesito más de un equipo."
+                        : "Según la calculadora necesito " + miles(r.btu) + " BTU.") : "",
       v("#f-msg")
     ].filter(Boolean).join(" ");
   }
@@ -271,6 +282,7 @@
   pintarFiltros();
   pintarEquipos();
   pintarCalculadora();
+  pintarCamposServicio();
   pintarPreview();
 
   // Exponer para depuración / integraciones externas

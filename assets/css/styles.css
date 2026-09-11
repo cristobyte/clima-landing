@@ -288,6 +288,7 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-form { min-width: 0; background: #fff; border: 1px solid var(--ct-line); border-radius: 24px; padding: 28px; box-shadow: 0 30px 64px -36px rgba(10,31,53,.4); }
 .ct-form__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
 .ct-input-wrap { display: block; margin-top: 16px; }
+.ct-input-wrap[hidden] { display: none; }
 .ct-form__grid .ct-input-wrap { margin-top: 0; }
 .ct-input-wrap label { display: block; font-size: 14px; font-weight: 600; color: var(--ct-ink-2); margin-bottom: 6px; }
 .ct-input { width: 100%; padding: 12px 14px; font-size: 16px; color: var(--ct-ink); background: #fbfcfe; border: 1px solid var(--ct-line-2); border-radius: var(--ct-r-sm); }
