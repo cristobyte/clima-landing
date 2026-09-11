@@ -7,8 +7,8 @@
 
   /* ---------- 1. Configuración editable ---------- */
   var CT_CONFIG = {
-    whatsapp: "56912345678",          // número en formato internacional, sin + ni espacios
-    whatsappDisplay: "+56 9 1234 5678",
+    whatsapp: "56934507925",          // número en formato internacional, sin + ni espacios
+    whatsappDisplay: "+56 9 3450 7925",
     modoCalculadora: "pasos",         // "pasos" (guiado) | "directo" (todo a la vista)
     mostrarPrecios: true,
     moneda: "es-CL"
