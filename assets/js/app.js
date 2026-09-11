@@ -227,8 +227,7 @@
       "El espacio tiene unos " + m2 + " m².",
       r.excede ? "Por la superficie probablemente necesito más de un equipo."
                : "Según la calculadora necesito " + miles(r.btu) + " BTU.",
-      v("#f-msg"),
-      v("#f-fono") ? "Mi teléfono es " + v("#f-fono") + "." : ""
+      v("#f-msg")
     ].filter(Boolean).join(" ");
   }
 
