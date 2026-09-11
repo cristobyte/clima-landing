@@ -49,9 +49,8 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-page img { max-width: 100%; display: block; }
 .ct-page a { color: var(--ct-bg-soft); text-decoration: none; }
 .ct-page a:hover { color: var(--ct-bg-soft); }
-.ct-contact a { color: var(--ct-bg-ink-3); text-decoration: none; }
+.ct-contact a { color: var(--ct-ink-3); text-decoration: none; }
 .ct-contact a:hover { color: var(--ct-blue); text-decoration: none; }
-
 .ct-page :focus-visible { outline: 2px solid var(--ct-blue); outline-offset: 2px; border-radius: 6px; }
 .ct-page input, .ct-page button, .ct-page textarea, .ct-page select { font-family: inherit; }
 
@@ -394,7 +393,7 @@ a.ct-btn--ghost:hover { color: var(--ct-blue) }
     place-items: center;          /* centra horizontal y verticalmente */
     overflow: hidden;
  
-    background-image: url("assets/img/bg-banner.png");
+    background-image: url("../img/bg-banner.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
