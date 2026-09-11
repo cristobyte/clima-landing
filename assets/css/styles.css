@@ -44,11 +44,14 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-page *, .ct-page *::before, .ct-page *::after { box-sizing: border-box; }
 .ct-page h1, .ct-page h2, .ct-page h3, .ct-page h4 { font-family: var(--ct-font-head); letter-spacing: -0.03em; margin: 0; }
 .ct-page h1 { margin: 40px 0; }
-.ct-page p, .ct-page ul, .ct-page figure, .ct-page blockquote { margin: 0; }
+.ct-page p, .ct-page ul, .ct-page figure, .ct-page blockquote { margin: 10px 0; }
 .ct-page ul { list-style: none; padding: 0; }
 .ct-page img { max-width: 100%; display: block; }
-.ct-page a { color: var(--ct-blue); text-decoration: none; }
-.ct-page a:hover { color: var(--ct-blue-dark); }
+.ct-page a { color: var(--ct-bg-soft); text-decoration: none; }
+.ct-page a:hover { color: var(--ct-bg-soft); }
+.ct-contact a { color: var(--ct-bg-ink-3); text-decoration: none; }
+.ct-contact a:hover { color: var(--ct-blue); text-decoration: none; }
+
 .ct-page :focus-visible { outline: 2px solid var(--ct-blue); outline-offset: 2px; border-radius: 6px; }
 .ct-page input, .ct-page button, .ct-page textarea, .ct-page select { font-family: inherit; }
 
@@ -70,7 +73,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-body--sm { font-size: 15px; }
 .ct-kicker { font-size: 14px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ct-orange-cta-dark); margin-bottom: 12px; }
 .ct-kicker--light { color: #7ea8d6; margin-bottom: 20px; }
-.ct-note { font-size: 13px; line-height: 1.5; color: var(--ct-ink-3); margin-top: 14px; }
+.ct-note { font-size: 10px; line-height: 1.5; color: var(--ct-ink-3); margin-top: 14px; }
 .ct-note--center { text-align: center; }
 
 /* ---------- Botones ---------- */
@@ -82,7 +85,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-btn--sm { font-size: 15px; padding: 11px 20px; border-radius: var(--ct-r-sm); }
 .ct-btn--block { display: flex; width: 100%; margin-top: 12px; }
 .ct-btn--grow { flex: 1; }
-.ct-btn--accent { background: var(--ct-orange-cta); color: #fff; box-shadow: 0 14px 30px -12px rgba(255, 90, 20, .7); }
+.ct-btn--accent { background: var(--ct-wa); color: #fff; box-shadow: 0 14px 30px -12px rgba(37, 211, 102, 0.7); }
 .ct-btn--accent:hover { background: var(--ct-orange-cta-dark); color: #fff; }
 .ct-btn--blue { background: var(--ct-blue); color: #fff; }
 .ct-btn--blue:hover { background: var(--ct-blue-dark); color: #fff; }
@@ -119,7 +122,7 @@ html:has(.ct-page) { scroll-behavior: smooth; }
   border-radius: 999px; padding: 7px 15px 7px 9px; font-size: 18px; font-weight: 600; color: var(--ct-ink-2);
   box-shadow: 0 4px 14px -8px rgba(10,31,53,.25);
 }
-.ct-pill__icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ct-orange-soft); color: var(--ct-orange-cta-dark); }
+.ct-pill__icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ct-bg-soft); color: var(--ct-orange-cta-dark); }
 .ct-pill__icon .ct-i { width: 13px; height: 13px; }
 .ct-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 30px 0 34px; }
 
@@ -351,3 +354,117 @@ body.ct-fullscreen.admin-bar .ct-header { top: 32px; }
 @media screen and (max-width: 600px) {
   body.ct-fullscreen.admin-bar .ct-header { top: 0; }
 }
+
+
+
+/* Custom CSS */
+.aurora-background {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.25) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 10%, rgba(14, 165, 233, 0.15) 0%, transparent 50%);
+}
+
+a.ct-btn--ghost { color: var(--ct-blue) }
+a.ct-btn--ghost:hover { color: var(--ct-blue) }
+  
+
+
+/* Full Width Banner */
+
+ /* ---------- SECCIÓN ---------- */
+  .banner {
+    /* variables para ajustar sin tocar el resto */
+    --banner-ratio: 5 / 2;
+    --banner-min-h: 340px;
+    --banner-overlay-top: rgba(6, 22, 38, 0.30);
+    --banner-overlay-bottom: rgba(6, 22, 38, 0.72);
+    --banner-text: #ffffff;
+    --banner-logo-w: 280px;
+    --banner-logo-h: 140px;
+ 
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: var(--banner-ratio);
+    min-height: var(--banner-min-h);
+ 
+    display: grid;
+    place-items: center;          /* centra horizontal y verticalmente */
+    overflow: hidden;
+ 
+    background-image: url("assets/img/bg-banner.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+ 
+  /* Ancho completo aunque la sección viva dentro de un contenedor limitado */
+  .banner--fullbleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+ 
+  /* Capa overlay: degradado + leve desenfoque y saturación */
+  .banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      var(--banner-overlay-top) 0%,
+      var(--banner-overlay-bottom) 100%
+    );
+    backdrop-filter: blur(2px) saturate(115%);
+    -webkit-backdrop-filter: blur(2px) saturate(115%);
+  }
+ 
+  .banner__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+    padding: clamp(1.5rem, 5vw, 4rem);
+    max-width: 62ch;
+    color: var(--banner-text);
+  }
+ 
+  .banner__title {
+    margin: 0 !important;
+    font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.35);
+  }
+ 
+  .banner__text {
+    margin: 0.75rem 0 0;
+    font-size: clamp(1rem, 0.9rem + 0.4vw, 1.185rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.88);
+  }
+ 
+  .banner__logo {
+    display: block;
+    width: var(--banner-logo-w);
+    height: var(--banner-logo-h);
+    max-width: 100%;
+    object-fit: contain;
+  }
+ 
+  /* En pantallas angostas 5:2 queda demasiado bajo para el contenido */
+  @media (max-width: 768px) {
+    .banner {
+      --banner-ratio: 4 / 3;
+      --banner-logo-w: 200px;
+      --banner-logo-h: 100px;
+    }
+  }
