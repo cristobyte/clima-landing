@@ -271,7 +271,7 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-dark__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: clamp(28px, 4vw, 64px); align-items: center; padding-block: clamp(44px, 5vw, 72px); }
 .ct-stars { display: flex; gap: 3px; margin-bottom: 18px; }
 .ct-stars .ct-i { width: 22px; height: 22px; }
-.ct-quote { font-family: var(--ct-font-head); font-size: clamp(23px, 2.6vw, 32px); line-height: 1.3; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 20px; }
+.ct-quote { font-family: var(--ct-font-head); font-size: clamp(18px, 1.6vw, 32px); line-height: 1.3; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 20px; }
 .ct-quote__by { font-size: 16px; color: #9fb4c9; }
 .ct-brands { display: flex; flex-wrap: wrap; gap: 10px; }
 .ct-brands li { font-family: var(--ct-font-head); font-size: 17px; font-weight: 700; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); padding: 10px 18px; border-radius: 999px; }
