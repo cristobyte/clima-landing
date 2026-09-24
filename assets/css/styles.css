@@ -299,6 +299,51 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-preview__title .ct-i { width: 16px; height: 16px; }
 .ct-preview__text { font-size: 15px; line-height: 1.55; color: #24503a; }
 
+/* --- Panel de correo: se despliega al pulsar «Enviar por correo» -------------
+   La apertura usa el truco grid-template-rows 0fr -> 1fr, que es la unica forma
+   de animar hacia una altura automatica sin JS ni adivinar pixeles. En navegadores
+   que no lo soportan simplemente abre de golpe, que es una degradacion aceptable.
+   El bloque global de prefers-reduced-motion (mas abajo) anula estas animaciones. */
+.ct-reveal { display: grid; grid-template-rows: 0fr; margin-top: 0; opacity: 0; transition: grid-template-rows 380ms cubic-bezier(.22,1,.36,1), opacity 240ms ease, margin-top 380ms cubic-bezier(.22,1,.36,1); }
+.ct-reveal.is-open { grid-template-rows: 1fr; margin-top: 14px; opacity: 1; }
+.ct-reveal__inner { overflow: hidden; min-height: 0; }
+.ct-reveal__hint { margin: 0 0 12px; font-size: 14px; font-weight: 600; color: var(--ct-ink-2); }
+
+/* Los campos entran escalonados: el retraso los hace notar sin hacerse esperar. */
+.ct-reveal .ct-stagger { opacity: 0; transform: translateY(8px); transition: opacity 300ms ease, transform 300ms cubic-bezier(.22,1,.36,1); transition-delay: calc(130ms + var(--i) * 70ms); }
+.ct-reveal.is-open .ct-stagger { opacity: 1; transform: none; }
+
+.ct-opt { font-weight: 500; color: var(--ct-ink-3); }
+.ct-input:focus { border-color: var(--ct-blue); box-shadow: 0 0 0 4px rgba(11,84,166,.12); outline: none; }
+.ct-input.is-bad { border-color: #d92d20; box-shadow: 0 0 0 4px rgba(217,45,32,.1); }
+.ct-input.is-bad { animation: ct-shake 320ms ease; }
+.ct-input-error { margin: 10px 0 0; font-size: 14px; font-weight: 600; color: #b42318; }
+.ct-input-error[hidden] { display: none; }
+.ct-input-error a { color: #b42318; text-decoration: underline; }
+
+/* Trampa anti-bots: fuera de pantalla y no display:none, que algunos bots detectan. */
+.ct-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.ct-btn--send { margin-top: 14px; }
+.ct-btn--send.is-sending { opacity: .75; pointer-events: none; }
+.ct-spinner { display: none; width: 17px; height: 17px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; animation: ct-spin 700ms linear infinite; }
+.ct-btn--send.is-sending .ct-spinner { display: block; }
+
+/* Confirmacion: misma paleta verde que la vista previa, para que se vea nativa. */
+.ct-sent { margin-top: 14px; background: #f2f8f4; border: 1px solid #d6ecdd; border-radius: 16px; padding: 22px 18px; text-align: center; animation: ct-pop 420ms cubic-bezier(.22,1,.36,1) both; }
+.ct-sent[hidden] { display: none; }
+.ct-sent__check { width: 52px; height: 52px; margin: 0 auto 10px; display: block; }
+.ct-sent__check circle, .ct-sent__check path { fill: none; stroke: #1d7a44; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ct-sent__check circle { stroke-dasharray: 152; stroke-dashoffset: 152; animation: ct-draw 520ms ease forwards; }
+.ct-sent__check path { stroke-dasharray: 36; stroke-dashoffset: 36; animation: ct-draw 320ms ease 420ms forwards; }
+.ct-sent__title { margin: 0; font-family: var(--ct-font-head); font-size: 19px; font-weight: 800; color: #1d7a44; letter-spacing: -0.02em; }
+.ct-sent__text { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: #24503a; }
+
+@keyframes ct-spin { to { transform: rotate(360deg); } }
+@keyframes ct-draw { to { stroke-dashoffset: 0; } }
+@keyframes ct-pop { from { opacity: 0; transform: translateY(10px) scale(.98); } }
+@keyframes ct-shake { 25% { transform: translateX(-4px); } 50% { transform: translateX(4px); } 75% { transform: translateX(-2px); } }
+
 /* ---------- Footer + FAB ---------- */
 .ct-footer { background: var(--ct-bg-soft); border-top: 1px solid #eaf0f7; }
 .ct-footer__inner { display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; justify-content: space-between; padding-block: 36px; }
@@ -330,7 +375,9 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   .ct-fab { width: 54px; height: 54px; right: 16px; bottom: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ct-page *, .ct-page *::before, .ct-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  .ct-page *, .ct-page *::before, .ct-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; animation-delay: .01ms !important; transition-delay: 0ms !important; }
+  /* Una rotacion forzada a .01ms no es una animacion corta: es un estrobo. */
+  .ct-spinner { animation: none !important; border-top-color: currentColor; opacity: .55; }
 }
 
 /* ============================================================

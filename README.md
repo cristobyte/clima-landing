@@ -46,9 +46,21 @@ Ese archivo se genera, nunca se edita a mano.
   (colores, radios, tipografías, ancho de contenedor) están en `:root` como `--ct-*`.
 - **JS en un IIFE**: sin variables globales salvo `window.ClimaTecnologia` (config, catálogo,
   estado y `refrescar()`) para depurar o integrar desde fuera.
-- **Estado en memoria, sin backend**: el formulario no envía nada al servidor; construye el
-  mensaje y abre `wa.me` en una pestaña nueva. Si más adelante quieres guardar los leads,
-  el punto de enganche es el `submit` de `[data-ct-form]` en `app.js`.
+- **Dos salidas para el formulario**: WhatsApp no toca el servidor (construye el mensaje y
+  abre `wa.me` en una pestaña nueva). Correo sí: el botón «Enviar por correo» despliega dos
+  campos —correo obligatorio, teléfono opcional— y hace `POST` a
+  `/wp-json/climatecnologia/v1/lead`, que envía la solicitud con `wp_mail()` a la casilla de
+  contacto (`CT_Landing_Lead`, en `includes/class-ct-lead.php`). No se guarda nada en la base
+  de datos: si quieres persistir los leads, el punto de enganche es `CT_Landing_Lead::recibir()`.
+  - El destino se cambia con el filtro `ct_landing_correo_destino`; **nunca** se acepta desde
+    el cliente, porque eso convertiría el endpoint en un relay abierto.
+  - El `From:` va en el dominio propio (pasa SPF) y el `Reply-To:` lleva al visitante: por eso
+    su correo es obligatorio.
+  - Anti-spam sin nonce —WP Super Cache sirve el HTML cacheado y un nonce llegaría compartido
+    y vencido—: honeypot (`#f-sitio`), trampa de tiempo (3 s) y tope de 3 envíos por IP cada
+    10 minutos. Al bot se le responde `ok:true` sin enviar nada, para no enseñarle a esquivarla.
+  - Sin endpoint (este `index.html` abierto fuera de WordPress, o el plugin sin actualizar) el
+    botón conserva su `mailto:` y abre la aplicación de correo del visitante.
 - **Accesibilidad**: contraste AA en los CTA (naranja `#cf3d08` sobre blanco), `:focus-visible`
   con anillo azul, `aria-pressed` en los grupos de selección, `aria-expanded` en el menú móvil
   y respeto de `prefers-reduced-motion`.
@@ -146,5 +158,9 @@ Puntos de entrada útiles al pedir cambios:
 
 - Fotos reales de instalaciones y reseñas verificables (con nombre y comuna).
 - Datos estructurados `LocalBusiness` + `AggregateRating` en el `<head>` para SEO local.
-- Guardado de leads (Contact Form 7, WPForms o endpoint propio) además del WhatsApp.
+- Guardar los leads en la base de datos además de enviarlos por correo: hoy, si `wp_mail()`
+  falla en silencio, la solicitud se pierde.
+- Verificar en cPanel → *Email Routing* que `climatecnologia.cl` esté en **Remote Mail
+  Exchanger**: el MX del dominio es Google Workspace, y si cPanel cree que la casilla es local
+  el correo no llega nunca.
 - Logo en SVG y favicon.

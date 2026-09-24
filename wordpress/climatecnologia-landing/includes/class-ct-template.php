@@ -151,6 +151,11 @@ class CT_Landing_Template {
 				// vacía, y app.js ignora las claves vacías (sección 1). Con '0' sí apaga.
 				'mostrarPrecios'  => empty( $o['mostrarPrecios'] ) ? '0' : '1',
 				'modoCalculadora' => $o['modoCalculadora'],
+				// Endpoint del formulario. rest_url() nunca devuelve cadena vacía, y eso
+				// importa: app.js descarta las claves vacías de CT_WP (sección 1). Si la
+				// clave no llega —index.html suelto, plugin viejo—, el botón de correo
+				// vuelve solo a abrir el mailto: del visitante.
+				'endpoint'        => esc_url_raw( rest_url( CT_Landing_Lead::REST_NS . CT_Landing_Lead::REST_RUTA ) ),
 			)
 		);
 	}

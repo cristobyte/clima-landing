@@ -9,6 +9,8 @@
   var CT_CONFIG = {
     whatsapp: "56934507925",          // número en formato internacional, sin + ni espacios
     whatsappDisplay: "+56 9 3450 7925",
+    email: "contacto@climatecnologia.cl",
+    endpoint: "",                     // lo entrega WordPress via CT_WP; vacio = se abre el mailto
     modoCalculadora: "pasos",         // "pasos" (guiado) | "directo" (todo a la vista)
     mostrarPrecios: true,
     moneda: "es-CL"
@@ -215,6 +217,15 @@
 
   /* ---------- 7. Formulario → WhatsApp ---------- */
   var form = $("[data-ct-form]"), elPreview = $("[data-ct-preview]");
+  var elMailForm  = $("[data-ct-mail-form]");
+  var elMailPanel = $("[data-ct-mail-panel]"), elMailOk = $("[data-ct-mail-ok]");
+  var elMailError = $("[data-ct-mail-error]"), elMailSend = $("[data-ct-mail-send]");
+  var elMailNote  = $("[data-ct-mail-note]");
+
+  // Marca de tiempo de carga: el servidor descarta los envios instantaneos (bots).
+  var t0 = Date.now();
+  var RE_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var enviando = false;
   var elM2Wrap = $("[data-ct-m2]");
 
   // Mantencion y reparacion son sobre un equipo ya instalado: los m2 no aportan
@@ -242,11 +253,24 @@
     ].filter(Boolean).join(" ");
   }
 
-  function pintarPreview() { if (elPreview) elPreview.textContent = armarMensaje(); }
+  function pintarPreview() {
+    var texto = armarMensaje();
+    if (elPreview) elPreview.textContent = texto;
+    if (elMailForm) elMailForm.href = urlCorreo(asuntoCorreo(), texto);
+  }
 
   function urlWhatsApp(texto) {
     return "https://wa.me/" + CT_CONFIG.whatsapp + (texto ? "?text=" + encodeURIComponent(texto) : "");
   }
+
+  // mailto: abre la aplicacion de correo del visitante con asunto y cuerpo ya escritos.
+  function urlCorreo(asunto, texto) {
+    return "mailto:" + CT_CONFIG.email +
+      "?subject=" + encodeURIComponent(asunto) +
+      "&body=" + encodeURIComponent(texto);
+  }
+
+  function asuntoCorreo() { return "Cotización " + state.servicio + " · ClimaTecnología"; }
 
   if (form) {
     form.addEventListener("input", pintarPreview);
@@ -257,6 +281,132 @@
       window.open(urlWhatsApp(armarMensaje()), "_blank", "noopener");
     });
   }
+
+  /* ---------- 7b. Envio directo por correo ----------
+     Sin endpoint (index.html suelto, plugin viejo) no se toca nada: el enlace
+     conserva su mailto: y abre la aplicacion de correo del visitante. */
+
+  function abrirPanel() {
+    elMailPanel.hidden = false;
+    elMailForm.setAttribute("aria-expanded", "true");
+    // Un frame de margen: si se agrega la clase en el mismo tick, el navegador
+    // pinta directo el estado final y la transicion no ocurre.
+    requestAnimationFrame(function () {
+      elMailPanel.classList.add("is-open");
+      var email = $("#f-email");
+      if (email) email.focus();
+    });
+  }
+
+  function limpiarError() {
+    var email = $("#f-email");
+    if (email) email.classList.remove("is-bad");
+    if (elMailError) { elMailError.hidden = true; elMailError.textContent = ""; }
+  }
+
+  function mostrarError(texto, conSalida) {
+    if (!elMailError) return;
+    elMailError.textContent = texto;
+    if (conSalida) {
+      // El servidor fallo, pero el lead no se pierde: se le ofrece su propio correo.
+      var a = document.createElement("a");
+      a.href = urlCorreo(asuntoCorreo(), armarMensaje());
+      a.textContent = "Ábralo en su aplicación de correo";
+      elMailError.appendChild(document.createTextNode(" "));
+      elMailError.appendChild(a);
+    }
+    elMailError.hidden = false;
+  }
+
+  function datosCorreo() {
+    var v = function (id) { var el = $(id); return el ? el.value.trim() : ""; };
+    var conM2 = pideM2();
+    var m2Form = Number(v("#f-m2"));
+    var m2 = m2Form > 0 ? m2Form : state.m2;
+    var r = conM2 ? calcular(m2) : null;
+    return {
+      servicio: state.servicio,
+      nombre: v("#f-nombre"),
+      email: v("#f-email"),
+      fono: v("#f-fono"),
+      comuna: v("#f-comuna"),
+      m2: conM2 ? m2 : 0,
+      btu: (conM2 && r && !r.excede) ? r.btu : 0,
+      detalle: v("#f-msg"),
+      pagina: window.location.href,
+      sitio: v("#f-sitio"),
+      ms: Date.now() - t0
+    };
+  }
+
+  function exito() {
+    elMailPanel.hidden = true;
+    elMailForm.hidden = true;
+    if (elMailNote) elMailNote.hidden = true;
+    if (elMailOk) elMailOk.hidden = false;
+    if (typeof window.gtag === "function") window.gtag("event", "generate_lead", { method: "email_directo", service: state.servicio });
+  }
+
+  function fallo(mensaje) {
+    enviando = false;
+    elMailSend.classList.remove("is-sending");
+    mostrarError(mensaje || "No pudimos enviar su solicitud.", !mensaje);
+  }
+
+  function enviar() {
+    if (enviando) return;        // doble clic o doble Enter: un solo POST
+    var email = $("#f-email");
+    limpiarError();
+
+    if (!email || !RE_EMAIL.test(email.value.trim())) {
+      if (email) { email.classList.add("is-bad"); email.focus(); }
+      mostrarError("Necesitamos un correo válido para poder responderle.", false);
+      return;
+    }
+
+    enviando = true;
+    elMailSend.classList.add("is-sending");
+
+    window.fetch(CT_CONFIG.endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // Sin cookies a proposito: con la cookie de sesion WordPress exige ademas la
+      // cabecera X-WP-Nonce y rechaza la peticion. Es decir, sin esto el formulario
+      // se rompe justo para quien esta con sesion iniciada — incluido quien lo pruebe.
+      credentials: "omit",
+      cache: "no-store",
+      body: JSON.stringify(datosCorreo())
+    }).then(function (res) {
+      if (res.ok) { exito(); return; }
+      // 400 y 429 traen un mensaje pensado para el visitante; se muestra tal cual.
+      res.json().then(function (d) { fallo(d && d.message); }, function () { fallo(); });
+    }, function () {
+      fallo();
+    });
+  }
+
+  if (elMailForm && elMailPanel && elMailSend) {
+    elMailForm.addEventListener("click", function (e) {
+      if (!CT_CONFIG.endpoint) return;   // sin backend: que siga el mailto:
+      e.preventDefault();
+      if (!elMailPanel.classList.contains("is-open")) abrirPanel();
+      else enviar();
+    });
+
+    elMailSend.addEventListener("click", enviar);
+
+    // Enter en cualquiera de los dos campos nuevos envia, como espera cualquiera.
+    elMailPanel.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { e.preventDefault(); enviar(); }
+    });
+  }
+
+  // Enlaces directos a correo (ficha de contacto)
+  $$("[data-ct-mail-link]").forEach(function (a) {
+    a.href = urlCorreo("Consulta desde el sitio · ClimaTecnología",
+      "Hola ClimaTecnología, quiero cotizar un servicio de climatización.");
+    a.textContent = CT_CONFIG.email;
+  });
 
   // Enlaces directos a WhatsApp (botón flotante, ficha de contacto)
   $$("[data-ct-wa-link]").forEach(function (a) {

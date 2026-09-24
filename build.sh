@@ -33,6 +33,12 @@ command -v zip >/dev/null     || abortar "Hace falta el comando 'zip'"
 VERSION="$(sed -n 's/^ \* Version:[[:space:]]*\(.*\)$/\1/p' "$FUENTE/$SLUG.php" | head -1 | tr -d '[:space:]')"
 [ -n "$VERSION" ] || abortar "No pude leer 'Version:' de $SLUG.php"
 
+# La cabecera da el nombre del zip; CT_LANDING_VER es el ?ver= que rompe la cache de
+# styles.css y app.js. Si divergen, el visitante recibe markup nuevo con JS viejo y el
+# boton queda muerto. Es la forma mas facil de publicar algo roto, asi que se corta aqui.
+VER_CONST="$(sed -n "s/.*define( *'CT_LANDING_VER', *'\([^']*\)'.*/\1/p" "$FUENTE/$SLUG.php" | head -1)"
+[ "$VER_CONST" = "$VERSION" ] || abortar "Version: $VERSION no coincide con CT_LANDING_VER $VER_CONST"
+
 echo "ClimaTecnología — build $VERSION"
 
 # ---------- 2. Extraer el bloque .ct-page de index.html ----------
@@ -43,7 +49,7 @@ MARKUP="$(awk '/^<div class="ct-page"/,/^<\/div>$/' "$RAIZ/index.html")"
 
 # Guardas: si el markup se reorganiza y la extracción se queda corta, mejor fallar aquí
 # que publicar un zip con media landing.
-for marca in 'ct-header' 'ct-footer' 'ct-fab' 'id="cotizar"' '^</div>$'; do
+for marca in 'ct-header' 'ct-footer' 'ct-fab' 'id="cotizar"' 'data-ct-mail-panel' '^</div>$'; do
 	grep -qE "$marca" <<<"$MARKUP" || abortar "El markup extraído no contiene '$marca'. Revisa la estructura de index.html."
 done
 
