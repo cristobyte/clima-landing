@@ -97,7 +97,7 @@ Ese archivo se genera, nunca se edita a mano.
     botón conserva su `mailto:` y abre la aplicación de correo del visitante.
 - **Accesibilidad**: contraste AA en los CTA (naranja `#cf3d08` sobre blanco), `:focus-visible`
   con anillo azul, `aria-pressed` en los grupos de selección, `aria-expanded` en el menú móvil
-  y respeto de `prefers-reduced-motion`.
+  y respeto de `prefers-reduced-motion` (que también deja quieto el video del hero).
 - **Responsive**: tres cortes (≥900px escritorio, ≤900px con menú hamburguesa, ≤560px móvil,
   con la barra fija de Llamar/WhatsApp abajo en lugar del botón flotante).
 
@@ -192,8 +192,9 @@ Puntos de entrada útiles al pedir cambios:
 ## Pendiente / mejoras sugeridas
 
 - Fotos reales de instalaciones y reseñas verificables (con nombre y comuna).
-- Foto real para el hero: hoy lleva `assets/img/hero-wireframe.svg`, un wireframe provisorio que
-  muestra la composición esperada (sujeto a la derecha). Ver el comentario del hero en `index.html`.
+- Hero: el fondo es `assets/img/AC-Family-BG.mp4` (1920×1080, 6 s, sin audio, en bucle). Pesa
+  1,9 MB y se descarga también en el teléfono; si molesta en datos móviles, la salida es una
+  versión 720p más liviana. `assets/img/hero-wireframe.svg` ya no se usa.
 - Datos estructurados `LocalBusiness` + `AggregateRating` en el `<head>` para SEO local.
 - Guardar los leads en la base de datos además de enviarlos por correo: hoy, si `wp_mail()`
   falla en silencio, la solicitud se pierde.

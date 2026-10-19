@@ -532,6 +532,15 @@
   // «Precios» apagado en Ajustes: fuera la seccion de precios instalados y su enlace del menu.
   $$("[data-ct-precios]").forEach(function (el) { el.hidden = !CT_CONFIG.mostrarPrecios; });
 
+  // Video del hero: con prefers-reduced-motion queda quieto en el primer cuadro. El CSS de
+  // movimiento reducido no alcanza a un <video>. pause() también apaga el autoplay
+  // pendiente si el video todavía no cargó.
+  var heroVideo = $(".ct-hero__media video");
+  if (heroVideo && window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    heroVideo.removeAttribute("autoplay");
+    heroVideo.pause();
+  }
+
   pintarFiltros();
   pintarEquipos();
   pintarCalculadora();

@@ -46,14 +46,15 @@
 
   
   <!-- HERO
-       Imagen a todo el ancho bajo un degradado oscuro: el texto va a la izquierda, sobre la
-       parte más oscura. La imagen actual es provisoria (un wireframe de la foto que va aquí).
-       Para la foto real: reemplazar el archivo o el src por un JPG/WebP de ~1920×1080 y
-       ≤250 KB, con el sujeto en la mitad derecha. Un solo src, sin srcset: build.sh solo
-       reescribe src="assets/..." para WordPress. -->
+       Video a todo el ancho bajo un degradado oscuro: el texto va a la izquierda, sobre la
+       parte más oscura, y la familia queda en la mitad derecha. Se repite sin fin y en
+       silencio (muted es requisito del autoplay; playsinline evita que el iPhone lo abra a
+       pantalla completa). Con prefers-reduced-motion, app.js lo deja quieto en el primer
+       cuadro. Un solo src, sin <source>: build.sh solo reescribe src="assets/..." para
+       WordPress. -->
   <section class="ct-hero">
     <div class="ct-hero__media" aria-hidden="true">
-      <img src="assets/img/hero-wireframe.svg" alt="" width="1920" height="1080" fetchpriority="high">
+      <video src="assets/img/AC-Family-BG.mp4" width="1920" height="1080" autoplay muted loop playsinline preload="auto"></video>
     </div>
     <div class="ct-shell ct-hero__inner">
       <div class="ct-hero__copy">

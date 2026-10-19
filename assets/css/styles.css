@@ -109,19 +109,25 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-nav .ct-btn { color: #fff; }
 
 /* ---------- Hero ----------
-   Imagen a todo el ancho con un degradado oscuro encima: el texto va a la izquierda, sobre
-   la zona más oscura, y el sujeto de la foto queda a la derecha. El fondo tinta es el
-   respaldo si la imagen no carga, para que el texto blanco nunca quede sobre blanco.
+   Video a todo el ancho con un degradado oscuro encima: el texto va a la izquierda, sobre
+   la zona más oscura, y el sujeto del video queda a la derecha. El fondo tinta es el
+   respaldo si el video no carga, para que el texto blanco nunca quede sobre blanco.
    Las reglas de adentro llevan .ct-hero delante porque .ct-page h1/p/ul (0,1,1) le ganan
    a una clase sola. */
 .ct-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--ct-ink); color: #fff; }
 .ct-hero__media { position: absolute; inset: 0; z-index: -1; }
-.ct-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
-.ct-hero__media::after {
+.ct-hero__media video { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+/*.ct-hero__media::after {
   content: ""; position: absolute; inset: 0;
   background:
     linear-gradient(0deg, rgba(6, 22, 38, .6) 0%, rgba(6, 22, 38, 0) 35%),
     linear-gradient(90deg, rgba(6, 22, 38, .92) 0%, rgba(6, 22, 38, .84) 40%, rgba(6, 22, 38, .45) 66%, rgba(6, 22, 38, .15) 100%);
+}*/
+.ct-hero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg, rgba(6, 22, 38, .6) 0%, rgba(6, 22, 38, 0) 35%),
+    linear-gradient(90deg, rgb(6 64 123 / 92%) 0%, rgb(40 74 107 / 84%) 40%, rgb(255 255 255 / 25%) 66%, rgb(255 255 255 / 15%) 100%)
 }
 /* Columna flexible: el texto se centra en el alto que sobra y la franja de checks baja al pie. */
 .ct-hero__inner { display: flex; flex-direction: column; min-height: clamp(560px, 78vh, 780px); padding-block: clamp(40px, 5vw, 72px) 28px; }
