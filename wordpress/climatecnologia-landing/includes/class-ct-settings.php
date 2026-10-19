@@ -123,7 +123,7 @@ class CT_Landing_Settings {
 	public static function campo_precios() {
 		$o = self::get();
 		printf(
-			'<label><input type="checkbox" name="%s[mostrarPrecios]" value="1" %s> Mostrar los precios «desde» en las fichas de equipos</label>',
+			'<label><input type="checkbox" name="%s[mostrarPrecios]" value="1" %s> Mostrar los precios «desde» en las fichas de equipos y la sección de precios instalados</label>',
 			esc_attr( self::OPTION ),
 			checked( ! empty( $o['mostrarPrecios'] ), true, false )
 		);

@@ -198,10 +198,13 @@
     var cta = e.target.closest("[data-ct-wa-cta], [data-ct-tel]");
     if (cta) {
       if (typeof window.gtag === "function") {
-        window.gtag("event", "generate_lead", {
+        var params = {
           method: cta.getAttribute("data-ct-wa-cta") || cta.getAttribute("data-ct-tel") || "whatsapp",
           service: state.servicio
-        });
+        };
+        // En las tarjetas de precios, que potencia se cotizo.
+        if (cta.hasAttribute("data-ct-plan")) params.plan = cta.getAttribute("data-ct-plan");
+        window.gtag("event", "generate_lead", params);
       }
       return;
     }
@@ -301,11 +304,22 @@
     ].filter(Boolean).join(" ");
   }
 
+  // Tarjetas de precios: el mensaje nombra la potencia y el precio que el visitante
+  // eligio. El precio se lee de la tarjeta, asi solo vive en un lugar del markup.
+  function mensajePlan(a) {
+    var plan = a.getAttribute("data-ct-plan");
+    if (!plan) return "";
+    var card = a.closest(".ct-price");
+    var precio = card ? $("[data-ct-precio]", card) : null;
+    return "Hola ClimaTecnología, me interesa un equipo de " + plan + " instalado" +
+      (precio ? " (desde " + precio.textContent.trim() + ")" : "") + ". ¿Me pueden cotizar?";
+  }
+
   // Los CTA dinamicos traen el wa.me escrito en el markup (funcionan sin JS); aqui se
   // reemplaza por el numero configurado en WordPress y el mensaje del momento.
   function pintarWhats() {
     var texto = mensajeWhatsApp();
-    $$("[data-ct-wa-cta]").forEach(function (a) { a.href = urlWhatsApp(texto); });
+    $$("[data-ct-wa-cta]").forEach(function (a) { a.href = urlWhatsApp(mensajePlan(a) || texto); });
   }
 
   // mailto: abre la aplicacion de correo del visitante con asunto y cuerpo ya escritos.
@@ -478,6 +492,9 @@
   }
 
   /* ---------- 9. Arranque ---------- */
+  // «Precios» apagado en Ajustes: fuera la seccion de precios instalados y su enlace del menu.
+  $$("[data-ct-precios]").forEach(function (el) { el.hidden = !CT_CONFIG.mostrarPrecios; });
+
   pintarFiltros();
   pintarEquipos();
   pintarCalculadora();

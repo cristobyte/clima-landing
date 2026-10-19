@@ -40,7 +40,8 @@ Ese archivo se genera, nunca se edita a mano.
      `pintarWhats()` refresca el `href` en cada cambio. Lo usan el CTA del hero, el del
      resultado de la calculadora y el botón verde de la barra móvil. El valor del atributo
      (`whatsapp_hero`, `whatsapp_calculadora`, `whatsapp_barra`) es además el `method` que
-     viaja a GA4 en `generate_lead`.
+     viaja a GA4 en `generate_lead`. Las tarjetas de precios usan el mismo atributo, pero
+     con `data-ct-plan` su mensaje es el de la tarjeta, no el de la calculadora.
 
    Esos CTA llevan el `wa.me` **escrito en el markup**, no `href="#"`: así funcionan sin JS
    y con `index.html` abierto fuera de WordPress. La contrapartida es que ese fallback trae
@@ -54,6 +55,13 @@ Ese archivo se genera, nunca se edita a mano.
 2. **Catálogo de equipos** — `CT_CATALOGO` en el mismo archivo (`marca`, `modelo`, `btu`,
    `m2`, `desde`, `tipo`). El filtro de potencia y la recomendación de la calculadora se
    generan desde ahí.
+   **Precios instalados** — sección `#precios` de `index.html`: tres tarjetas (9.000, 12.000
+   y 18.000 BTU) con el precio de la variante «Con instalación» más barata de cada potencia
+   en la tienda, y debajo qué incluye la instalación estándar y qué se cotiza aparte. Los
+   montos están escritos a mano: si cambian en WooCommerce, hay que cambiarlos aquí. El
+   botón de cada tarjeta abre WhatsApp con la potencia y el precio (`[data-ct-plan]` +
+   `[data-ct-precio]`) y llega a GA4 como `method: whatsapp_precios` con `plan`. El
+   interruptor *Precios* de Ajustes oculta también esta sección y su enlace del menú.
 3. **Fotos reales** — `assets/img/instalacion-1.jpg`, `-2.jpg`, `-3.jpg`. Si el archivo no
    existe, la tarjeta muestra un marcador punteado con la descripción de la foto que falta.
 4. **Datos de contacto y horario** — en `index.html`, sección `#cotizar`.

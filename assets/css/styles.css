@@ -228,6 +228,36 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-card:hover { box-shadow: 0 26px 50px -30px rgba(10,31,53,.4); transform: translateY(-3px); }
 .ct-card .ct-body { margin-bottom: 18px; }
 
+/* ---------- Precios instalados ---------- */
+.ct-price { background: #fff; border: 1px solid var(--ct-line); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; }
+/* .ct-page p trae margen de 10px: aquí cada línea fija el suyo. */
+.ct-price p { margin: 0; }
+.ct-price .ct-price__btu { font-family: var(--ct-font-head); font-size: 36px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--ct-ink); }
+.ct-price__btu span { font-size: 18px; font-weight: 700; letter-spacing: 0; color: var(--ct-blue); }
+.ct-price .ct-price__cover { margin-top: 8px; font-size: 15px; color: var(--ct-ink-3); }
+.ct-price .ct-price__from { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--ct-line); font-size: 14px; font-weight: 600; color: var(--ct-ink-2); }
+.ct-price .ct-price__amount { font-family: var(--ct-font-head); font-size: 42px; font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; color: var(--ct-blue); }
+.ct-price .ct-price__ref { margin: 8px 0 22px; font-size: 14px; line-height: 1.5; color: var(--ct-ink-3); }
+.ct-price .ct-btn { margin-top: auto; }
+/* .ct-page a pisa el color de cualquier enlace: el verde oscuro de .ct-btn--wa (AA) hay que reforzarlo. */
+.ct-price .ct-btn--wa, .ct-price .ct-btn--wa:hover { color: #06371c; }
+
+.ct-incl { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 36px; margin-top: 26px; padding: 22px 26px; background: #fff; border: 1px solid var(--ct-line); border-radius: var(--ct-r-md); }
+.ct-page .ct-incl__item { position: relative; margin: 0; padding-left: 30px; font-size: 15px; line-height: 1.55; color: var(--ct-ink-3); }
+.ct-incl__item strong { display: block; margin-bottom: 2px; font-size: 16px; color: var(--ct-ink); }
+.ct-incl__item::before { content: ""; position: absolute; left: 0; top: 2px; width: 20px; height: 20px; }
+.ct-incl__item--si::before {
+  background: var(--ct-green);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.ct-incl__item--aparte::before {
+  background: var(--ct-orange-cta-dark);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+.ct-page .ct-price__note { margin: 14px 0 0; font-size: 14px; color: var(--ct-ink-3); }
+
 .ct-step { background: #fff; border: 1px solid var(--ct-line); border-radius: var(--ct-r-md); padding: 26px; }
 .ct-step__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
 .ct-step__n { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: var(--ct-r-sm); background: var(--ct-blue); color: #fff; font-family: var(--ct-font-head); font-weight: 800; font-size: 16px; }
@@ -372,10 +402,12 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   .ct-header__inner { position: relative; }
   .ct-hero__grid { grid-template-columns: 1fr; }
   .ct-trust, .ct-cta { grid-template-columns: 1fr; }
+  .ct-incl { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .ct-page { font-size: 16px; }
-  .ct-calc__body, .ct-form, .ct-card { padding: 22px; }
+  .ct-calc__body, .ct-form, .ct-card, .ct-price { padding: 22px; }
+  .ct-incl { padding: 20px; }
   .ct-choices--3 { grid-template-columns: 1fr; }
   .ct-actions .ct-btn { width: 100%; }
 

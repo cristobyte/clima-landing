@@ -49,7 +49,7 @@ MARKUP="$(awk '/^<div class="ct-page"/,/^<\/div>$/' "$RAIZ/index.html")"
 
 # Guardas: si el markup se reorganiza y la extracción se queda corta, mejor fallar aquí
 # que publicar un zip con media landing.
-for marca in 'ct-header' 'ct-footer' 'ct-fab' 'ct-dock' 'id="cotizar"' 'data-ct-mail-panel' 'data-ct-wa-cta' '^</div>$'; do
+for marca in 'ct-header' 'ct-footer' 'ct-fab' 'ct-dock' 'id="precios"' 'id="cotizar"' 'data-ct-mail-panel' 'data-ct-wa-cta' '^</div>$'; do
 	grep -qE "$marca" <<<"$MARKUP" || abortar "El markup extraído no contiene '$marca'. Revisa la estructura de index.html."
 done
 
