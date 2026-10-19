@@ -27,8 +27,24 @@ Ese archivo se genera, nunca se edita a mano.
 
 1. **Número de WhatsApp** — `assets/js/app.js`, objeto `CT_CONFIG` (`whatsapp` en formato
    internacional sin `+`, y `whatsappDisplay` para mostrar). Alimenta el botón flotante,
-   la ficha de contacto y el envío del formulario. Una vez instalado el plugin ya no hace
-   falta tocar el JS: se cambia en *Ajustes → ClimaTecnología*.
+   la ficha de contacto, los CTA que abren WhatsApp directo y el envío del formulario. Una
+   vez instalado el plugin ya no hace falta tocar el JS: se cambia en
+   *Ajustes → ClimaTecnología*.
+
+   Hay **dos patrones** de enlace a WhatsApp, a propósito:
+
+   - `[data-ct-wa-link]` — mensaje genérico fijo, se escribe una sola vez al cargar. Lo usan
+     el botón flotante y la ficha de contacto.
+   - `[data-ct-wa-cta]` — mensaje dinámico: `mensajeWhatsApp()` le suma m², tipo de espacio,
+     exposición al sol, BTU y equipo sugerido en cuanto la calculadora tiene resultado, y
+     `pintarWhats()` refresca el `href` en cada cambio. Lo usan el CTA del hero y el del
+     resultado de la calculadora. El valor del atributo (`whatsapp_hero`,
+     `whatsapp_calculadora`) es además el `method` que viaja a GA4 en `generate_lead`.
+
+   Esos CTA llevan el `wa.me` **escrito en el markup**, no `href="#"`: así funcionan sin JS
+   y con `index.html` abierto fuera de WordPress. La contrapartida es que ese fallback trae
+   el número fijo — si se cambia el número en *Ajustes*, hay que actualizarlo también en
+   `index.html` para los visitantes sin JS (el resto recibe el de Ajustes vía `CT_WP`).
 2. **Catálogo de equipos** — `CT_CATALOGO` en el mismo archivo (`marca`, `modelo`, `btu`,
    `m2`, `desde`, `tipo`). El filtro de potencia y la recomendación de la calculadora se
    generan desde ahí.

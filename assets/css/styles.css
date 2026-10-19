@@ -124,6 +124,9 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-pill__icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ct-bg-soft); color: var(--ct-orange-cta-dark); }
 .ct-pill__icon .ct-i { width: 13px; height: 13px; }
 .ct-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 30px 0 34px; }
+p.ct-actions__alt { margin: -18px 0 26px; font-size: 15px; color: var(--ct-ink-3); }
+.ct-actions__alt a { color: var(--ct-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #b9d2ee; }
+.ct-actions__alt a:hover { color: var(--ct-blue-dark); text-decoration-color: var(--ct-blue); }
 
 a.ct-btn--accent { color: var(--ct-bg-soft) }
 a.ct-btn--accent:hover { color: var(--ct-bg-wa) }

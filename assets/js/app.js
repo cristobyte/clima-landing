@@ -102,7 +102,7 @@
     if (elRestart) elRestart.hidden = !pasosMode;
     if (elResult) elResult.hidden = !enResultado;
     if (elDisclaimer) elDisclaimer.hidden = !enResultado;
-    if (!enResultado) return;
+    if (!enResultado) { pintarWhats(); return; }
 
     var opciones = r.excede ? [] : CT_CATALOGO.filter(function (p) { return p.btu === r.btu; });
     var reco = opciones[0] || null;
@@ -122,6 +122,7 @@
     var m2Input = $("#f-m2");
     if (m2Input && !m2Input.value) m2Input.placeholder = String(state.m2);
     pintarPreview();
+    pintarWhats();
   }
 
   if (elRange) elRange.addEventListener("input", function () { state.m2 = Number(this.value); pintarCalculadora(); });
@@ -190,6 +191,20 @@
 
   // Cotizar un equipo concreto → precarga servicio y detalle del formulario
   root.addEventListener("click", function (e) {
+    // Los CTA directos se van del sitio: si no se marcan aqui, GA4 muestra una caida de
+    // conversiones justo cuando la conversion real sube. Mide intencion (el clic), igual
+    // que el submit del formulario. El valor del atributo es el method que viaja a GA4.
+    var wa = e.target.closest("[data-ct-wa-cta]");
+    if (wa) {
+      if (typeof window.gtag === "function") {
+        window.gtag("event", "generate_lead", {
+          method: wa.getAttribute("data-ct-wa-cta") || "whatsapp",
+          service: state.servicio
+        });
+      }
+      return;
+    }
+
     var equipo = e.target.closest("[data-ct-equipo]");
     if (equipo) {
       state.equipoElegido = equipo.getAttribute("data-ct-equipo");
@@ -261,6 +276,35 @@
 
   function urlWhatsApp(texto) {
     return "https://wa.me/" + CT_CONFIG.whatsapp + (texto ? "?text=" + encodeURIComponent(texto) : "");
+  }
+
+  // Mensaje de los CTA que van directo a WhatsApp (hero y resultado de la calculadora).
+  // Sin calculadora usada va el texto generico; con resultado en pantalla se suma lo que
+  // ya sabemos del espacio para que la conversacion no empiece de cero. Usa las mismas
+  // etiquetas que el resumen del resultado, asi el mensaje no puede divergir de lo que
+  // el visitante tiene a la vista.
+  function mensajeWhatsApp() {
+    var base = "Hola ClimaTecnología, necesito más información.";
+    if (pasosMode && state.paso < 3) return base;
+
+    var r = calcular(state.m2);
+    var contexto = "El espacio tiene unos " + state.m2 + " m² (" +
+      USO[state.uso].label + ", " + SOL[state.sol].label.toLowerCase() + ")";
+
+    return [
+      base,
+      contexto + (r.excede
+        ? " y por la superficie probablemente necesito más de un equipo."
+        : " y según la calculadora necesito " + miles(r.btu) + " BTU."),
+      state.equipoElegido ? "Me sugirieron el " + state.equipoElegido + "." : ""
+    ].filter(Boolean).join(" ");
+  }
+
+  // Los CTA dinamicos traen el wa.me escrito en el markup (funcionan sin JS); aqui se
+  // reemplaza por el numero configurado en WordPress y el mensaje del momento.
+  function pintarWhats() {
+    var texto = mensajeWhatsApp();
+    $$("[data-ct-wa-cta]").forEach(function (a) { a.href = urlWhatsApp(texto); });
   }
 
   // mailto: abre la aplicacion de correo del visitante con asunto y cuerpo ya escritos.
