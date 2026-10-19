@@ -359,6 +359,9 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 }
 .ct-fab:hover { background: var(--ct-wa-dark); color: #06371c; }
 
+/* Barra de contacto: solo existe en el corte móvil, donde reemplaza al FAB. */
+.ct-dock { display: none; }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .ct-header__toggle { display: inline-flex; }
@@ -375,7 +378,26 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   .ct-calc__body, .ct-form, .ct-card { padding: 22px; }
   .ct-choices--3 { grid-template-columns: 1fr; }
   .ct-actions .ct-btn { width: 100%; }
-  .ct-fab { width: 54px; height: 54px; right: 16px; bottom: 16px; }
+
+  /* En el teléfono el CTA del hero se va con el primer scroll: la barra deja WhatsApp y
+     la llamada siempre a mano. El FAB sobra, haría lo mismo que el botón verde. */
+  .ct-fab { display: none; }
+  .ct-dock {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 70;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255,255,255,.94); backdrop-filter: blur(14px);
+    border-top: 1px solid #e9eff6; box-shadow: 0 -12px 28px -20px rgba(10,31,53,.45);
+  }
+  .ct-dock .ct-btn { font-size: 16px; font-weight: 700; padding: 13px 12px; border-radius: var(--ct-r-sm); }
+  /* .ct-page a pisa el color de cualquier enlace: hace falta el doble de clase, también en :hover. */
+  .ct-dock .ct-dock__call, .ct-dock .ct-dock__call:hover { background: #fff; color: var(--ct-blue); border: 1px solid var(--ct-line-2); }
+  .ct-dock .ct-dock__wa, .ct-dock .ct-dock__wa:hover { background: var(--ct-wa); color: #06371c; }
+  .ct-dock .ct-dock__wa:active { background: var(--ct-wa-dark); }
+  /* Con el teclado abierto la barra quedaría flotando encima del campo que se escribe. */
+  .ct-page:has(.ct-input:focus) .ct-dock { display: none; }
+  /* Alto de la barra, para que no tape el final del pie de página. */
+  .ct-footer { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) {
   .ct-page *, .ct-page *::before, .ct-page *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; animation-delay: .01ms !important; transition-delay: 0ms !important; }

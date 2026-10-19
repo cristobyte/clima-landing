@@ -191,14 +191,15 @@
 
   // Cotizar un equipo concreto → precarga servicio y detalle del formulario
   root.addEventListener("click", function (e) {
-    // Los CTA directos se van del sitio: si no se marcan aqui, GA4 muestra una caida de
-    // conversiones justo cuando la conversion real sube. Mide intencion (el clic), igual
-    // que el submit del formulario. El valor del atributo es el method que viaja a GA4.
-    var wa = e.target.closest("[data-ct-wa-cta]");
-    if (wa) {
+    // Los CTA directos (WhatsApp y llamada) se van del sitio: si no se marcan aqui, GA4
+    // muestra una caida de conversiones justo cuando la conversion real sube. Mide
+    // intencion (el clic), igual que el submit del formulario. El valor del atributo es
+    // el method que viaja a GA4.
+    var cta = e.target.closest("[data-ct-wa-cta], [data-ct-tel]");
+    if (cta) {
       if (typeof window.gtag === "function") {
         window.gtag("event", "generate_lead", {
-          method: wa.getAttribute("data-ct-wa-cta") || "whatsapp",
+          method: cta.getAttribute("data-ct-wa-cta") || cta.getAttribute("data-ct-tel") || "whatsapp",
           service: state.servicio
         });
       }
@@ -459,6 +460,10 @@
     a.rel = "noopener";
     if (a.textContent.trim() === "+56 9 1234 5678") a.textContent = CT_CONFIG.whatsappDisplay;
   });
+
+  // Llamadas (barra móvil): el número es el mismo de WhatsApp, así que también sigue
+  // a Ajustes. Con + delante: sin él, el teléfono lo marca como número local y falla.
+  $$("[data-ct-tel]").forEach(function (a) { a.href = "tel:+" + CT_CONFIG.whatsapp; });
 
   /* ---------- 8. Menú móvil ---------- */
   var toggle = $("[data-ct-nav-toggle]"), nav = $("#ct-nav");

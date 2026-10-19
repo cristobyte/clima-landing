@@ -37,14 +37,20 @@ Ese archivo se genera, nunca se edita a mano.
      el botón flotante y la ficha de contacto.
    - `[data-ct-wa-cta]` — mensaje dinámico: `mensajeWhatsApp()` le suma m², tipo de espacio,
      exposición al sol, BTU y equipo sugerido en cuanto la calculadora tiene resultado, y
-     `pintarWhats()` refresca el `href` en cada cambio. Lo usan el CTA del hero y el del
-     resultado de la calculadora. El valor del atributo (`whatsapp_hero`,
-     `whatsapp_calculadora`) es además el `method` que viaja a GA4 en `generate_lead`.
+     `pintarWhats()` refresca el `href` en cada cambio. Lo usan el CTA del hero, el del
+     resultado de la calculadora y el botón verde de la barra móvil. El valor del atributo
+     (`whatsapp_hero`, `whatsapp_calculadora`, `whatsapp_barra`) es además el `method` que
+     viaja a GA4 en `generate_lead`.
 
    Esos CTA llevan el `wa.me` **escrito en el markup**, no `href="#"`: así funcionan sin JS
    y con `index.html` abierto fuera de WordPress. La contrapartida es que ese fallback trae
    el número fijo — si se cambia el número en *Ajustes*, hay que actualizarlo también en
    `index.html` para los visitantes sin JS (el resto recibe el de Ajustes vía `CT_WP`).
+
+   **Barra móvil** (`.ct-dock`, solo ≤560px, donde reemplaza al botón flotante): «Llamar» y
+   «WhatsApp» fijos abajo. «Llamar» (`[data-ct-tel]`) marca **el mismo número de WhatsApp**
+   como `tel:+<número>`, y su clic también se mide en GA4 con `method: telefono_barra`. Si
+   algún día la llamada debe ir a otro número, hay que separarlo en `CT_CONFIG` y en *Ajustes*.
 2. **Catálogo de equipos** — `CT_CATALOGO` en el mismo archivo (`marca`, `modelo`, `btu`,
    `m2`, `desde`, `tipo`). El filtro de potencia y la recomendación de la calculadora se
    generan desde ahí.
@@ -80,7 +86,8 @@ Ese archivo se genera, nunca se edita a mano.
 - **Accesibilidad**: contraste AA en los CTA (naranja `#cf3d08` sobre blanco), `:focus-visible`
   con anillo azul, `aria-pressed` en los grupos de selección, `aria-expanded` en el menú móvil
   y respeto de `prefers-reduced-motion`.
-- **Responsive**: tres cortes (≥900px escritorio, ≤900px con menú hamburguesa, ≤560px móvil).
+- **Responsive**: tres cortes (≥900px escritorio, ≤900px con menú hamburguesa, ≤560px móvil,
+  con la barra fija de Llamar/WhatsApp abajo en lugar del botón flotante).
 
 ## Modos de la calculadora
 
