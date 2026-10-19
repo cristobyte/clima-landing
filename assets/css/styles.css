@@ -146,9 +146,15 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-checks--row li { font-weight: 500; color: #4c6480; align-items: center; }
 .ct-checks--row li::before { margin-top: 0; }
 
-/* ---------- Calculadora ---------- */
+/* ---------- Calculadora ----------
+   Sección propia entre Servicios y Precios. El ancla #calculadora vive en la sección,
+   no en la tarjeta. La columna de la tarjeta se topa en el ancho que tenía en el hero:
+   los ajustes de .ct-result para pantallas angostas cuentan con esa tarjeta estrecha. */
+.ct-calc-sec { scroll-margin-top: 84px; }
+.ct-calc-sec__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 540px); gap: clamp(28px, 4vw, 64px); align-items: center; }
+.ct-calc-sec__copy { max-width: 52ch; }
 .ct-calc {
-  min-width: 0; scroll-margin-top: 92px; background: #fff; border: 1px solid var(--ct-line);
+  min-width: 0; background: #fff; border: 1px solid var(--ct-line);
   border-radius: var(--ct-r-lg); overflow: hidden;
   box-shadow: 0 32px 70px -34px rgba(10,31,53,.35), 0 2px 6px rgba(10,31,53,.04);
 }
@@ -407,7 +413,7 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   .ct-nav .ct-btn { margin-top: 8px; padding: 14px 20px; }
   .ct-header__inner { position: relative; }
   .ct-hero__grid { grid-template-columns: 1fr; }
-  .ct-trust, .ct-cta { grid-template-columns: 1fr; }
+  .ct-trust, .ct-cta, .ct-calc-sec__grid { grid-template-columns: 1fr; }
   .ct-incl { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
