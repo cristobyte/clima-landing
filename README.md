@@ -35,9 +35,10 @@ Ese archivo se genera, nunca se edita a mano.
 
    - `[data-ct-wa-link]` — mensaje genérico fijo, se escribe una sola vez al cargar. Lo usan
      el botón flotante y la ficha de contacto.
-   - `[data-ct-wa-cta]` — mensaje dinámico: `mensajeWhatsApp()` le suma m², tipo de espacio,
-     exposición al sol, BTU y equipo sugerido en cuanto la calculadora tiene resultado, y
-     `pintarWhats()` refresca el `href` en cada cambio. Lo usan el CTA del hero, el del
+   - `[data-ct-wa-cta]` — mensaje dinámico: en cuanto la calculadora tiene resultado,
+     `mensajeWhatsApp()` arma un mensaje de una línea por dato (espacio y m², exposición al
+     sol, BTU recomendados con el equipo y su precio instalado), y `pintarWhats()` refresca
+     el `href` en cada cambio. Lo usan el CTA del hero, el del
      resultado de la calculadora y el botón verde de la barra móvil. El valor del atributo
      (`whatsapp_hero`, `whatsapp_calculadora`, `whatsapp_barra`) es además el `method` que
      viaja a GA4 en `generate_lead`. Las tarjetas de precios usan el mismo atributo, pero
@@ -53,15 +54,18 @@ Ese archivo se genera, nunca se edita a mano.
    como `tel:+<número>`, y su clic también se mide en GA4 con `method: telefono_barra`. Si
    algún día la llamada debe ir a otro número, hay que separarlo en `CT_CONFIG` y en *Ajustes*.
 2. **Catálogo de equipos** — `CT_CATALOGO` en el mismo archivo (`marca`, `modelo`, `btu`,
-   `m2`, `desde`, `tipo`). El filtro de potencia y la recomendación de la calculadora se
-   generan desde ahí.
+   `m2`, `desde`, `instalado`, `tipo`). `desde` es el equipo solo e `instalado` la variante
+   «Con instalación» de la tienda. **Es la única fuente de precios**: el equipo con menor
+   `instalado` de cada potencia es el «desde» del resultado de la calculadora, de su
+   mensaje de WhatsApp y de las tarjetas de precios. Si cambian los precios en WooCommerce,
+   se cambian aquí.
    **Precios instalados** — sección `#precios` de `index.html`: tres tarjetas (9.000, 12.000
-   y 18.000 BTU) con el precio de la variante «Con instalación» más barata de cada potencia
-   en la tienda, y debajo qué incluye la instalación estándar y qué se cotiza aparte. Los
-   montos están escritos a mano: si cambian en WooCommerce, hay que cambiarlos aquí. El
-   botón de cada tarjeta abre WhatsApp con la potencia y el precio (`[data-ct-plan]` +
-   `[data-ct-precio]`) y llega a GA4 como `method: whatsapp_precios` con `plan`. El
-   interruptor *Precios* de Ajustes oculta también esta sección y su enlace del menú.
+   y 18.000 BTU, `data-ct-precio-btu`) y debajo qué incluye la instalación estándar y qué se
+   cotiza aparte. Monto y modelo los pinta `app.js` desde `CT_CATALOGO`; los del markup son
+   el respaldo sin JS (mantenerlos iguales). El botón de cada tarjeta abre WhatsApp con la
+   potencia y el precio (`[data-ct-plan]` + `[data-ct-precio]`) y llega a GA4 como
+   `method: whatsapp_precios` con `plan`. El interruptor *Precios* de Ajustes oculta esta
+   sección y su enlace del menú, y quita el precio del resultado de la calculadora.
 3. **Fotos reales** — `assets/img/instalacion-1.jpg`, `-2.jpg`, `-3.jpg`. Si el archivo no
    existe, la tarjeta muestra un marcador punteado con la descripción de la foto que falta.
 4. **Datos de contacto y horario** — en `index.html`, sección `#cotizar`.

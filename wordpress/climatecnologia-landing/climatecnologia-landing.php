@@ -3,7 +3,7 @@
  * Plugin Name:       ClimaTecnología — Landing
  * Plugin URI:        https://climatecnologia.cl/
  * Description:       Plantilla de página a pantalla completa que reemplaza por completo el layout del tema (header, barra lateral, contenido y pie) por la landing de ClimaTecnología. Funciona con cualquier tema, sin tema hijo ni editar functions.php.
- * Version:           1.4.0
+ * Version:           1.5.0
  * Requires at least: 5.9
  * Requires PHP:      7.2
  * Author:            ClimaTecnología
@@ -33,7 +33,7 @@ if ( defined( 'CT_LANDING_VER' ) ) {
 	return;
 }
 
-define( 'CT_LANDING_VER', '1.4.0' );
+define( 'CT_LANDING_VER', '1.5.0' );
 define( 'CT_LANDING_FILE', __FILE__ );
 define( 'CT_LANDING_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CT_LANDING_URL', plugin_dir_url( __FILE__ ) );

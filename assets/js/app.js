@@ -17,15 +17,20 @@
   };
 
   // Catálogo: editar aquí o reemplazar por datos de WooCommerce/ACF (ver README).
+  // desde = solo equipo; instalado = variante «Con instalación» de la tienda. El más
+  // barato instalado de cada potencia es el «desde» de la calculadora y de las
+  // tarjetas de precios (sección 6b): cambiarlo aquí cambia los dos.
   var CT_CATALOGO = [
-    { marca: "Artik", modelo: "EVO 9000",            btu: 9000,  m2: 18, desde: 265000, tipo: "Inverter" },
-    { marca: "Midea", modelo: "AI Ecomaster 9000",   btu: 9000,  m2: 18, desde: 310000, tipo: "Inverter IA" },
-    { marca: "Artik", modelo: "EVO 12000",           btu: 12000, m2: 25, desde: 275000, tipo: "Inverter" },
-    { marca: "TCL",   modelo: "Breezin 12000",       btu: 12000, m2: 25, desde: 300000, tipo: "Inverter" },
-    { marca: "Midea", modelo: "AI Ecomaster 12000",  btu: 12000, m2: 25, desde: 345000, tipo: "Inverter IA" },
-    { marca: "TCL",   modelo: "Breezin 18000",       btu: 18000, m2: 36, desde: 420000, tipo: "Inverter" },
-    { marca: "Midea", modelo: "AI Ecomaster 18000",  btu: 18000, m2: 36, desde: 475000, tipo: "Inverter IA" },
-    { marca: "Artik", modelo: "EVO 36000",           btu: 36000, m2: 58, desde: 799990, tipo: "Inverter" }
+    { marca: "Artik", modelo: "EVO 9000",            btu: 9000,  m2: 18, desde: 265000, instalado: 415000, tipo: "Inverter" },
+    { marca: "Midea", modelo: "AI Ecomaster 9000",   btu: 9000,  m2: 18, desde: 310000, instalado: 460000, tipo: "Inverter IA" },
+    { marca: "Artik", modelo: "EVO 12000",           btu: 12000, m2: 25, desde: 275000, instalado: 425000, tipo: "Inverter" },
+    { marca: "TCL",   modelo: "Breezin 12000",       btu: 12000, m2: 25, desde: 300000, instalado: 450000, tipo: "Inverter" },
+    { marca: "Midea", modelo: "AI Ecomaster 12000",  btu: 12000, m2: 25, desde: 345000, instalado: 495000, tipo: "Inverter IA" },
+    { marca: "Artik", modelo: "EVO 18000",           btu: 18000, m2: 36, desde: 395000, instalado: 550000, tipo: "Inverter" },
+    { marca: "TCL",   modelo: "Breezin 18000",       btu: 18000, m2: 36, desde: 420000, instalado: 620000, tipo: "Inverter" },
+    { marca: "Midea", modelo: "AI Ecomaster 18000",  btu: 18000, m2: 36, desde: 475000, instalado: 675000, tipo: "Inverter IA" },
+    { marca: "Artik", modelo: "EVO 24000",           btu: 24000, m2: 45, desde: 505000, instalado: 660000, tipo: "Inverter" },
+    { marca: "Artik", modelo: "EVO 36000",           btu: 36000, m2: 58, desde: 799990, instalado: 960000, tipo: "Inverter" }
   ];
 
   // WordPress puede sobreescribir la config vía wp_localize_script (objeto global CT_WP).
@@ -75,6 +80,19 @@
     return { bruto: bruto, btu: btu || 36000, excede: bruto > 36000 };
   }
 
+  // Equipo mas barato instalado de una potencia: respalda el «desde» del resultado, de
+  // su mensaje de WhatsApp y de las tarjetas de precios.
+  function masBarato(btu) {
+    var orden = function (p) { return p.instalado || Number.MAX_VALUE; };
+    return CT_CATALOGO.filter(function (p) { return p.btu === btu; })
+      .sort(function (a, b) { return orden(a) - orden(b); })[0] || null;
+  }
+
+  // Solo se promete precio si el equipo lo trae y Ajustes deja mostrarlo.
+  function precioInstalado(p) {
+    return p && p.instalado && CT_CONFIG.mostrarPrecios ? clp(p.instalado) : "";
+  }
+
   /* ---------- 4. Calculadora ---------- */
   var elRange = $("#ct-m2"), elOut = $("#ct-m2-out");
   var elProgress = $("[data-ct-progress]"), elBar = $("[data-ct-progress-bar]"), elProgLabel = $("[data-ct-progress-label]");
@@ -104,19 +122,21 @@
     if (elDisclaimer) elDisclaimer.hidden = !enResultado;
     if (!enResultado) { pintarWhats(); return; }
 
-    var opciones = r.excede ? [] : CT_CATALOGO.filter(function (p) { return p.btu === r.btu; });
-    var reco = opciones[0] || null;
+    var reco = r.excede ? null : masBarato(r.btu);
+    var precio = precioInstalado(reco);
     var textos = {
-      "[data-ct-btu]": miles(r.btu),
+      "[data-ct-btu]": (r.excede ? "+" : "") + miles(r.btu),
       "[data-ct-resumen]": r.excede
         ? "Para " + state.m2 + " m² con este uso conviene dividir la carga en dos equipos o un cassette. Lo definimos en la visita técnica."
         : "Para " + state.m2 + " m² con " + SOL[state.sol].label.toLowerCase() + " y uso de " + USO[state.uso].label.toLowerCase() + ", esta es la potencia mínima que rinde sin trabajar al límite.",
-      "[data-ct-count]": r.excede ? "a medida" : (reco ? (opciones.length > 1 ? opciones.length + " modelos" : "1 modelo") : "a pedido"),
-      "[data-ct-model]": r.excede ? "Dos equipos o cassette" : (reco ? reco.marca + " " + reco.modelo : miles(r.btu) + " BTU a pedido"),
-      "[data-ct-cover]": r.excede ? "Se define en la visita técnica" : (reco ? "Cubre hasta " + reco.m2 + " m²" : "No publicado en tienda, lo conseguimos"),
-      "[data-ct-price]": reco && CT_CONFIG.mostrarPrecios ? "Desde " + clp(reco.desde) : "Cotización a medida"
+      "[data-ct-price-label]": precio ? "Instalado desde" : (r.excede ? "Solución sugerida" : "Equipo sugerido"),
+      "[data-ct-price]": precio,
+      "[data-ct-model]": r.excede ? "Dos equipos o un cassette · se define en la visita técnica"
+        : (reco ? reco.marca + " " + reco.modelo + " · cubre hasta " + reco.m2 + " m²" : miles(r.btu) + " BTU a pedido · lo conseguimos")
     };
     Object.keys(textos).forEach(function (sel) { var el = $(sel); if (el) el.textContent = textos[sel]; });
+    var elPrice = $("[data-ct-price]");
+    if (elPrice) elPrice.hidden = !precio;
 
     state.equipoElegido = reco && !r.excede ? reco.marca + " " + reco.modelo : "";
     var m2Input = $("#f-m2");
@@ -178,6 +198,18 @@
         '</article>';
     }).join("");
   }
+
+  /* ---------- 6b. Tarjetas de precios ----------
+     Monto y modelo salen de CT_CATALOGO, igual que el resultado de la calculadora:
+     asi no pueden mostrar dos precios distintos. Lo escrito en el markup queda como
+     respaldo sin JS. Corre antes de pintarWhats(), que lee el precio de cada tarjeta. */
+  $$(".ct-price[data-ct-precio-btu]").forEach(function (card) {
+    var p = masBarato(Number(card.getAttribute("data-ct-precio-btu")));
+    if (!p || !p.instalado) return;
+    var elPrecio = $("[data-ct-precio]", card), elModelo = $("[data-ct-precio-modelo]", card);
+    if (elPrecio) elPrecio.textContent = clp(p.instalado);
+    if (elModelo) elModelo.textContent = p.marca + " " + p.modelo;
+  });
 
   if (elFiltros) {
     elFiltros.addEventListener("click", function (e) {
@@ -282,26 +314,31 @@
     return "https://wa.me/" + CT_CONFIG.whatsapp + (texto ? "?text=" + encodeURIComponent(texto) : "");
   }
 
-  // Mensaje de los CTA que van directo a WhatsApp (hero y resultado de la calculadora).
-  // Sin calculadora usada va el texto generico; con resultado en pantalla se suma lo que
-  // ya sabemos del espacio para que la conversacion no empiece de cero. Usa las mismas
-  // etiquetas que el resumen del resultado, asi el mensaje no puede divergir de lo que
-  // el visitante tiene a la vista.
+  // Mensaje de los CTA que van directo a WhatsApp (hero, barra movil y resultado de la
+  // calculadora). Sin calculadora usada va el texto generico; con resultado en pantalla
+  // va todo lo que ya sabemos, una linea por dato, para que el tecnico pueda cotizar sin
+  // volver a preguntar. Sale de las mismas etiquetas, equipo y precio que pinta el
+  // resultado, asi el mensaje no puede divergir de lo que el visitante tiene a la vista.
   function mensajeWhatsApp() {
     var base = "Hola ClimaTecnología, necesito más información.";
     if (pasosMode && state.paso < 3) return base;
 
     var r = calcular(state.m2);
-    var contexto = "El espacio tiene unos " + state.m2 + " m² (" +
-      USO[state.uso].label + ", " + SOL[state.sol].label.toLowerCase() + ")";
+    var reco = r.excede ? null : masBarato(r.btu);
+    var precio = precioInstalado(reco);
+    var recomendacion = r.excede
+      ? "más de 36.000 BTU, dos equipos o un cassette"
+      : miles(r.btu) + " BTU" + (reco
+        ? " (" + reco.marca + " " + reco.modelo + (precio ? ", desde " + precio + " instalado" : "") + ")"
+        : "");
 
     return [
-      base,
-      contexto + (r.excede
-        ? " y por la superficie probablemente necesito más de un equipo."
-        : " y según la calculadora necesito " + miles(r.btu) + " BTU."),
-      state.equipoElegido ? "Me sugirieron el " + state.equipoElegido + "." : ""
-    ].filter(Boolean).join(" ");
+      "Hola ClimaTecnología, usé la calculadora de su web:",
+      "• Espacio: " + USO[state.uso].label + ", " + state.m2 + " m²",
+      "• Exposición: " + SOL[state.sol].label,
+      "• Recomendación: " + recomendacion,
+      "¿Me pueden cotizar?"
+    ].join("\n");
   }
 
   // Tarjetas de precios: el mensaje nombra la potencia y el precio que el visitante

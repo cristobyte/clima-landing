@@ -199,11 +199,17 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-result__btu strong { font-family: var(--ct-font-head); font-size: clamp(44px, 6vw, 60px); font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
 .ct-result__btu span { font-size: 20px; font-weight: 700; color: #cfe2f7; }
 .ct-result__text { margin-top: 12px; font-size: 15px; line-height: 1.5; color: #cfe2f7; }
-.ct-result__card { margin-top: 20px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); border-radius: 15px; padding: 16px; }
-.ct-result__row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 6px; font-size: 14px; color: #cfe2f7; }
-.ct-result__row:first-child { margin-top: 0; }
+.ct-result__card { margin-top: 20px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); border-radius: 15px; padding: 16px 18px; }
+/* .ct-page p trae margen de 10px: dentro de la ficha cada línea fija el suyo. */
+.ct-result__card p { margin: 0; }
 .ct-result__muted { font-size: 13px; font-weight: 600; color: #a9cbf0; }
-.ct-result__model { font-family: var(--ct-font-head); font-size: 20px; font-weight: 700; margin-top: 4px; }
+.ct-result .ct-result__price { margin-top: 2px; font-family: var(--ct-font-head); font-size: 34px; font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; color: #fff; }
+.ct-result .ct-result__price[hidden] { display: none; }
+.ct-result .ct-result__model { margin-top: 6px; font-size: 15px; font-weight: 600; color: #cfe2f7; }
+/* .ct-page a pisa el color de cualquier enlace: el verde oscuro de .ct-btn--wa (AA) hay que reforzarlo. */
+.ct-result .ct-btn--wa, .ct-result .ct-btn--wa:hover { color: #06371c; box-shadow: none; }
+.ct-result .ct-btn--wa { padding-inline: 14px; }
+.ct-result .ct-result__hint { margin: 8px 0 0; font-size: 13px; line-height: 1.45; text-align: center; color: #a9cbf0; }
 @keyframes ct-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
 /* ---------- Secciones ---------- */
@@ -407,6 +413,10 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 @media (max-width: 560px) {
   .ct-page { font-size: 16px; }
   .ct-calc__body, .ct-form, .ct-card, .ct-price { padding: 22px; }
+  /* Dentro de la tarjeta del calculador el resultado queda angosto: menos relleno para que
+     «Cotizar por WhatsApp» quepa en una línea hasta en pantallas de 360px. */
+  .ct-result { padding: 20px 18px; }
+  .ct-result .ct-btn--wa { font-size: 16px; gap: 8px; }
   .ct-incl { padding: 20px; }
   .ct-choices--3 { grid-template-columns: 1fr; }
   .ct-actions .ct-btn { width: 100%; }
