@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+<title>Imagen de referencia del hero (wireframe)</title>
+<defs><style>
+.m{fill:none;stroke:#8fa6bf;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.k{fill:#f6f9fc;stroke:#6f88a3;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.s{fill:none;stroke:#b3c3d4;stroke-width:1.4}
+.x{fill:none;stroke:#d3dde8;stroke-width:1.5}
+.d{fill:none;stroke:#8fa6bf;stroke-width:1.8;stroke-dasharray:9 7;stroke-linecap:round}
+.t{font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:22px;fill:#4f6782}
+.n{font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:17px;font-weight:700;fill:#6f88a3;text-anchor:middle}
+.lb{fill:#e9eff6;opacity:.92}
+</style>
+<marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1 9 5 0 9z" fill="#8fa6bf"/></marker>
+</defs>
+<rect width="1920" height="1080" fill="#e9eff6"/>
+<line class="x" x1="0" y1="0" x2="1920" y2="1080"/><line class="x" x1="1920" y1="0" x2="0" y2="1080"/>
+<line class="m" x1="560" y1="150" x2="1920" y2="150"/><line class="m" x1="560" y1="740" x2="1920" y2="740"/><line class="m" x1="560" y1="150" x2="560" y2="740"/>
+<line class="s" x1="560" y1="164" x2="1920" y2="164"/>
+<line class="s" x1="560" y1="722" x2="1920" y2="722"/>
+<line class="m" x1="560" y1="150" x2="163.6" y2="0"/>
+<line class="m" x1="560" y1="740" x2="0" y2="974.6"/>
+<line class="s" x1="760" y1="150" x2="470.7" y2="0"/>
+<line class="s" x1="1000" y1="150" x2="839.3" y2="0"/>
+<line class="s" x1="1240" y1="150" x2="1207.9" y2="0"/>
+<line class="s" x1="1480" y1="150" x2="1576.4" y2="0"/>
+<line class="s" x1="1720" y1="150" x2="1945" y2="0"/>
+<line class="s" x1="680" y1="740" x2="0" y2="1080"/>
+<line class="s" x1="800" y1="740" x2="251.6" y2="1080"/>
+<line class="s" x1="920" y1="740" x2="503.2" y2="1080"/>
+<line class="s" x1="1040" y1="740" x2="754.8" y2="1080"/>
+<line class="s" x1="1160" y1="740" x2="1006.5" y2="1080"/>
+<line class="s" x1="1280" y1="740" x2="1258.1" y2="1080"/>
+<line class="s" x1="1400" y1="740" x2="1509.7" y2="1080"/>
+<line class="s" x1="1520" y1="740" x2="1761.3" y2="1080"/>
+<line class="s" x1="1640" y1="740" x2="2012.9" y2="1080"/>
+<line class="s" x1="1760" y1="740" x2="2264.5" y2="1080"/>
+<line class="s" x1="1880" y1="740" x2="2516.1" y2="1080"/>
+<line class="s" x1="2000" y1="740" x2="2767.7" y2="1080"/>
+<line class="s" x1="2120" y1="740" x2="3019.4" y2="1080"/>
+<line class="s" x1="2240" y1="740" x2="3271" y2="1080"/>
+<line class="s" x1="2360" y1="740" x2="3522.6" y2="1080"/>
+<line class="s" x1="2480" y1="740" x2="3774.2" y2="1080"/>
+<line class="s" x1="515.6" y1="758.6" x2="1920" y2="758.6"/>
+<line class="s" x1="449" y1="786.5" x2="1920" y2="786.5"/>
+<line class="s" x1="352.8" y1="826.8" x2="1920" y2="826.8"/>
+<line class="s" x1="204.8" y1="888.8" x2="1920" y2="888.8"/>
+<line class="s" x1="0" y1="988" x2="1920" y2="988"/>
+<rect class="k" x="1640" y="240" width="250" height="340" rx="4"/>
+<rect class="m" x="1652" y="252" width="226" height="316" style="fill:#eef3f8"/>
+<circle class="m" cx="1830" cy="300" r="24"/>
+<line class="m" x1="1862" y1="300" x2="1874" y2="300"/>
+<line class="m" x1="1852.6" y1="322.6" x2="1861.1" y2="331.1"/>
+<line class="m" x1="1830" y1="332" x2="1830" y2="344"/>
+<line class="m" x1="1807.4" y1="322.6" x2="1798.9" y2="331.1"/>
+<line class="m" x1="1798" y1="300" x2="1786" y2="300"/>
+<line class="m" x1="1807.4" y1="277.4" x2="1798.9" y2="268.9"/>
+<line class="m" x1="1830" y1="268" x2="1830" y2="256"/>
+<line class="m" x1="1852.6" y1="277.4" x2="1861.1" y2="268.9"/>
+<rect class="k" x="1668" y="470" width="150" height="98" rx="6"/>
+<circle class="m" cx="1718" cy="519" r="34"/><circle class="m" cx="1718" cy="519" r="5"/>
+<path class="s" d="M1723 519 Q1742.8 535.9 1729.6 548.8"/>
+<path class="s" d="M1715.5 523.3 Q1691 532 1686.4 514.1"/>
+<path class="s" d="M1715.5 514.7 Q1720.3 489.1 1738 494"/>
+<line class="s" x1="1768" y1="482" x2="1768" y2="556"/>
+<line class="s" x1="1776" y1="482" x2="1776" y2="556"/>
+<line class="s" x1="1784" y1="482" x2="1784" y2="556"/>
+<line class="s" x1="1792" y1="482" x2="1792" y2="556"/>
+<line class="s" x1="1800" y1="482" x2="1800" y2="556"/>
+<line class="s" x1="1808" y1="482" x2="1808" y2="556"/>
+<rect class="k" x="1759" y="252" width="12" height="316"/>
+<rect class="k" x="1652" y="394" width="226" height="12"/>
+<rect class="k" x="1625" y="580" width="280" height="14" rx="3"/>
+<path class="d" d="M1640 594 L1662 830 M1890 594 L1905 830"/>
+<path class="d" d="M1662 830 L1905 830 L1918 1000 L1690 1000 Z"/>
+<path class="m" d="M930 850 L1580 850 L1660 965 L850 965 Z" style="stroke-dasharray:3 6"/>
+<rect class="k" x="1000" y="650" width="500" height="108" rx="22"/>
+<line class="s" x1="1167" y1="662" x2="1167" y2="750"/><line class="s" x1="1333" y1="662" x2="1333" y2="750"/>
+<rect class="k" x="980" y="748" width="540" height="68" rx="16"/>
+<line class="s" x1="1160" y1="754" x2="1160" y2="812"/><line class="s" x1="1340" y1="754" x2="1340" y2="812"/>
+<rect class="k" x="952" y="700" width="62" height="130" rx="20"/><rect class="k" x="1486" y="700" width="62" height="130" rx="20"/>
+<path class="m" d="M1000 830 V848 M1500 830 V848"/>
+<ellipse class="k" cx="880" cy="848" rx="34" ry="8"/><line class="m" x1="880" y1="840" x2="880" y2="600"/>
+<path class="k" d="M842 600 H918 L903 540 H857 Z"/>
+<path class="d" d="M850 606 L800 700 M910 606 L960 700"/>
+<rect class="k" x="1566" y="772" width="78" height="9" rx="3"/><path class="m" d="M1576 781 L1570 848 M1634 781 L1640 848"/>
+<path class="k" d="M1584 772 L1580 738 H1630 L1626 772 Z"/>
+<path class="k" d="M1605 738 C1590 712 1572 700 1556 700 C1570 716 1586 728 1605 738"/>
+<path class="k" d="M1605 738 C1612 706 1626 690 1646 684 C1636 704 1624 722 1605 738"/>
+<path class="k" d="M1605 738 C1600 704 1604 680 1612 664 C1618 690 1614 716 1605 738"/>
+<rect class="d" x="1140" y="222" width="400" height="126" rx="24" style="stroke:#b3c3d4"/>
+<rect class="k" x="1150" y="230" width="380" height="110" rx="20" style="fill:#fbfdff"/>
+<line class="s" x1="1178" y1="241" x2="1178" y2="253"/>
+<line class="s" x1="1191" y1="241" x2="1191" y2="253"/>
+<line class="s" x1="1204" y1="241" x2="1204" y2="253"/>
+<line class="s" x1="1217" y1="241" x2="1217" y2="253"/>
+<line class="s" x1="1230" y1="241" x2="1230" y2="253"/>
+<line class="s" x1="1243" y1="241" x2="1243" y2="253"/>
+<line class="s" x1="1256" y1="241" x2="1256" y2="253"/>
+<line class="s" x1="1269" y1="241" x2="1269" y2="253"/>
+<line class="s" x1="1282" y1="241" x2="1282" y2="253"/>
+<line class="s" x1="1295" y1="241" x2="1295" y2="253"/>
+<line class="s" x1="1308" y1="241" x2="1308" y2="253"/>
+<line class="s" x1="1321" y1="241" x2="1321" y2="253"/>
+<line class="s" x1="1334" y1="241" x2="1334" y2="253"/>
+<line class="s" x1="1347" y1="241" x2="1347" y2="253"/>
+<line class="s" x1="1360" y1="241" x2="1360" y2="253"/>
+<line class="s" x1="1373" y1="241" x2="1373" y2="253"/>
+<line class="s" x1="1386" y1="241" x2="1386" y2="253"/>
+<line class="s" x1="1399" y1="241" x2="1399" y2="253"/>
+<line class="s" x1="1412" y1="241" x2="1412" y2="253"/>
+<line class="s" x1="1425" y1="241" x2="1425" y2="253"/>
+<line class="s" x1="1438" y1="241" x2="1438" y2="253"/>
+<line class="s" x1="1451" y1="241" x2="1451" y2="253"/>
+<line class="s" x1="1464" y1="241" x2="1464" y2="253"/>
+<line class="s" x1="1477" y1="241" x2="1477" y2="253"/>
+<line class="s" x1="1490" y1="241" x2="1490" y2="253"/>
+<line class="s" x1="1503" y1="241" x2="1503" y2="253"/>
+<line class="s" x1="1164" y1="300" x2="1516" y2="300"/>
+<rect class="m" x="1172" y="312" width="336" height="16" rx="8"/>
+<path class="m" d="M1180 316 Q1340.0 334 1500 316"/>
+<rect class="m" x="1180" y="272" width="70" height="10" rx="3" style="stroke:#b3c3d4"/>
+<rect class="m" x="1452" y="268" width="52" height="22" rx="5"/>
+<text x="1478" y="285" text-anchor="middle" style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:15px;font-weight:700;fill:#6f88a3">24°</text>
+<circle cx="1438" cy="279" r="3.5" fill="#6f88a3"/>
+<path class="d" d="M1200 352 C1172 420 1150 470 1112 528" marker-end="url(#a)"/>
+<path class="d" d="M1262 354 C1244 432 1228 490 1204 560" marker-end="url(#a)"/>
+<path class="d" d="M1324 356 C1316 432 1306 500 1294 584" marker-end="url(#a)"/>
+<path d="M1530 300 H1612" fill="none" stroke="#6f88a3" stroke-width="5" stroke-linecap="round"/>
+<path d="M1530 300 H1612" fill="none" stroke="#fbfdff" stroke-width="1.6" stroke-linecap="round"/>
+<circle class="k" cx="1618" cy="300" r="8"/>
+<path class="d" d="M1626 300 H1700 V468"/>
+<path class="m" d="M620 1012 H1900" marker-start="url(#a)" marker-end="url(#a)"/>
+<line class="m" x1="620" y1="998" x2="620" y2="1026"/><line class="m" x1="1900" y1="998" x2="1900" y2="1026"/>
+<rect class="lb" x="1220" y="996" width="84" height="32" rx="6"/><text class="t" x="1262" y="1020" text-anchor="middle">6,0 m</text>
+<line class="m" x1="1150" y1="190" x2="1186" y2="230"/>
+<rect class="lb" x="1176" y="173" width="286.8" height="34" rx="7"/>
+<circle cx="1150" cy="190" r="17" fill="#fff" stroke="#6f88a3" stroke-width="2"/><text class="n" x="1150" y="196">1</text>
+<text class="t" x="1186" y="198">Split muro · 12.000 BTU</text>
+<line class="m" x1="1662" y1="200" x2="1808" y2="282"/>
+<rect class="lb" x="1688" y="183" width="205.6" height="34" rx="7"/>
+<circle cx="1662" cy="200" r="17" fill="#fff" stroke="#6f88a3" stroke-width="2"/><text class="n" x="1662" y="206">4</text>
+<text class="t" x="1698" y="208">Exposición solar</text>
+<line class="m" x1="1668" y1="652" x2="1716" y2="568"/>
+<rect class="lb" x="1694" y="635" width="194" height="34" rx="7"/>
+<circle cx="1668" cy="652" r="17" fill="#fff" stroke="#6f88a3" stroke-width="2"/><text class="n" x="1668" y="658">2</text>
+<text class="t" x="1704" y="660">Unidad exterior</text>
+<line class="m" x1="1590" y1="404" x2="1596" y2="306"/>
+<rect class="lb" x="1358.4" y="387" width="205.6" height="34" rx="7"/>
+<circle cx="1590" cy="404" r="17" fill="#fff" stroke="#6f88a3" stroke-width="2"/><text class="n" x="1590" y="410">3</text>
+<text class="t" x="1368.4" y="412">Cañería de cobre</text>
+<line class="m" x1="1450" y1="905" x2="1450" y2="905"/>
+<rect class="lb" x="1476" y="888" width="228.8" height="34" rx="7"/>
+<circle cx="1450" cy="905" r="17" fill="#fff" stroke="#6f88a3" stroke-width="2"/><text class="n" x="1450" y="911">5</text>
+<text class="t" x="1486" y="913">Superficie · 24 m²</text>
+<rect x="1386" y="82" width="506" height="56" rx="10" fill="#f3f6fa" stroke="#b3c3d4" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="1406" y="105" style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;fill:#6f88a3">IMAGEN DE REFERENCIA</text>
+<text x="1406" y="128" style="font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:15px;fill:#5f7891">Reemplazar por foto 1920×1080 · sujeto a la derecha</text>
+</svg>

@@ -192,6 +192,8 @@ Puntos de entrada útiles al pedir cambios:
 ## Pendiente / mejoras sugeridas
 
 - Fotos reales de instalaciones y reseñas verificables (con nombre y comuna).
+- Foto real para el hero: hoy lleva `assets/img/hero-wireframe.svg`, un wireframe provisorio que
+  muestra la composición esperada (sujeto a la derecha). Ver el comentario del hero en `index.html`.
 - Datos estructurados `LocalBusiness` + `AggregateRating` en el `<head>` para SEO local.
 - Guardar los leads en la base de datos además de enviarlos por correo: hoy, si `wp_mail()`
   falla en silencio, la solicitud se pierde.

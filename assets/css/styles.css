@@ -108,14 +108,33 @@ html:has(.ct-page) { scroll-behavior: smooth; }
 .ct-nav a:hover { color: var(--ct-blue); }
 .ct-nav .ct-btn { color: #fff; }
 
-/* ---------- Hero ---------- */
-.ct-hero { background: linear-gradient(180deg, #f2f7fd 0%, #fff 78%); border-bottom: 1px solid #eef3f9; }
-.ct-hero__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: clamp(36px, 4vw, 64px); align-items: center;
-  padding-block: clamp(44px, 6vw, 84px) clamp(40px, 5vw, 64px);
+/* ---------- Hero ----------
+   Imagen a todo el ancho con un degradado oscuro encima: el texto va a la izquierda, sobre
+   la zona más oscura, y el sujeto de la foto queda a la derecha. El fondo tinta es el
+   respaldo si la imagen no carga, para que el texto blanco nunca quede sobre blanco.
+   Las reglas de adentro llevan .ct-hero delante porque .ct-page h1/p/ul (0,1,1) le ganan
+   a una clase sola. */
+.ct-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--ct-ink); color: #fff; }
+.ct-hero__media { position: absolute; inset: 0; z-index: -1; }
+.ct-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: 72% center; }
+.ct-hero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg, rgba(6, 22, 38, .6) 0%, rgba(6, 22, 38, 0) 35%),
+    linear-gradient(90deg, rgba(6, 22, 38, .92) 0%, rgba(6, 22, 38, .84) 40%, rgba(6, 22, 38, .45) 66%, rgba(6, 22, 38, .15) 100%);
 }
-.ct-hero__copy { min-width: 0; }
+/* Columna flexible: el texto se centra en el alto que sobra y la franja de checks baja al pie. */
+.ct-hero__inner { display: flex; flex-direction: column; min-height: clamp(560px, 78vh, 780px); padding-block: clamp(40px, 5vw, 72px) 28px; }
+.ct-hero__copy { min-width: 0; max-width: 680px; margin-block: auto; }
+.ct-hero .ct-kicker { margin: 0 0 18px; }
+.ct-hero .ct-h1 { font-size: clamp(40px, 5.6vw, 68px); max-width: 17ch; margin: 22px 0 18px; color: #fff; text-wrap: balance; }
+.ct-hero .ct-blue { color: #7cc0ff; }
+.ct-hero .ct-lead { color: rgba(255, 255, 255, .86); max-width: 54ch; }
+.ct-hero .ct-pill { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .22); color: #fff; box-shadow: none; }
+.ct-hero .ct-btn--outline-light { border-color: rgba(255, 255, 255, .42); }
+.ct-hero p.ct-actions__alt { color: #c9d8e8; }
+.ct-hero .ct-actions__alt a { color: #9fd0ff; text-decoration-color: rgba(159, 208, 255, .5); }
+.ct-hero .ct-actions__alt a:hover { color: #fff; text-decoration-color: #fff; }
 .ct-pill {
   display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1px solid #dfe9f4;
   border-radius: 999px; padding: 7px 15px 7px 9px; font-size: 13px; font-weight: 600; color: var(--ct-ink-2);
@@ -142,9 +161,15 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
 }
-.ct-checks--row { display: inline !important; padding-top: 20px !important; margin-top: 60px !important; display: flex; flex-wrap: wrap; gap: 10px 22px; padding-top: 24px; border-top: 1px solid #e6edf5; margin-bottom: 0; }
-.ct-checks--row li { font-weight: 500; color: #4c6480; align-items: center; }
-.ct-checks--row li::before { margin-top: 0; }
+/* Franja de confianza al pie del hero: barra translúcida sobre la imagen. */
+.ct-hero .ct-checks--row {
+  display: flex; flex-wrap: wrap; gap: 10px 22px;
+  margin: 24px 0 0; padding: 14px 22px; border-radius: 16px;
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.ct-hero .ct-checks--row li { font-size: 14px; font-weight: 500; color: #e6eef7; align-items: center; }
+.ct-hero .ct-checks--row li::before { margin-top: 0; background: #4ade80; }
 
 /* ---------- Calculadora ----------
    Sección propia entre Servicios y Precios. El ancla #calculadora vive en la sección,
@@ -412,7 +437,10 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   .ct-nav a { padding: 12px 4px; font-size: 17px; }
   .ct-nav .ct-btn { margin-top: 8px; padding: 14px 20px; }
   .ct-header__inner { position: relative; }
-  .ct-hero__grid { grid-template-columns: 1fr; }
+  /* Aquí el texto cubre toda la imagen: el degradado pasa a vertical y más parejo. */
+  .ct-hero__media::after { background: linear-gradient(180deg, rgba(6, 22, 38, .8) 0%, rgba(6, 22, 38, .92) 100%); }
+  .ct-hero__inner { min-height: 0; padding-block: 44px 24px; }
+  .ct-hero__copy { margin-block: 0; }
   .ct-trust, .ct-cta, .ct-calc-sec__grid { grid-template-columns: 1fr; }
   .ct-incl { grid-template-columns: 1fr; }
 }
@@ -426,6 +454,7 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
   .ct-incl { padding: 20px; }
   .ct-choices--3 { grid-template-columns: 1fr; }
   .ct-actions .ct-btn { width: 100%; }
+  .ct-hero .ct-checks--row { display: grid; gap: 8px; padding: 16px 18px; }
 
   /* En el teléfono el CTA del hero se va con el primer scroll: la barra deja WhatsApp y
      la llamada siempre a mano. El FAB sobra, haría lo mismo que el botón verde. */
