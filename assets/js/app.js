@@ -13,6 +13,9 @@
     endpoint: "",                     // lo entrega WordPress via CT_WP; vacio = se abre el mailto
     modoCalculadora: "pasos",         // "pasos" (guiado) | "directo" (todo a la vista)
     mostrarPrecios: true,
+    // Fichas de equipos (#equipos): el precio «Desde» sigue en el markup y en CT_CATALOGO,
+    // solo queda oculto. Para volver a mostrarlo, poner true.
+    preciosEnFichas: false,
     moneda: "es-CL"
   };
 
@@ -197,6 +200,7 @@
     var lista = CT_CATALOGO.filter(function (p) { return state.filtro === "todos" || String(p.btu) === state.filtro; });
     elEquipos.innerHTML = lista.map(function (p) {
       var precio = CT_CONFIG.mostrarPrecios ? clp(p.desde) : "Cotizar";
+      var ocultarPrecio = CT_CONFIG.preciosEnFichas ? "" : " hidden";
       return '' +
         '<article class="ct-prod">' +
           '<div class="ct-prod__top">' +
@@ -207,8 +211,8 @@
           '<div class="ct-prod__body">' +
             '<h3 class="ct-prod__name">' + p.marca + " " + p.modelo + '</h3>' +
             '<div class="ct-prod__spacer"></div>' +
-            '<p class="ct-prod__from">Desde</p>' +
-            '<p class="ct-prod__price">' + precio + '</p>' +
+            '<p class="ct-prod__from"' + ocultarPrecio + '>Desde</p>' +
+            '<p class="ct-prod__price"' + ocultarPrecio + '>' + precio + '</p>' +
             '<a class="ct-btn ct-btn--blue" href="#cotizar" data-ct-equipo="' + p.marca + " " + p.modelo + '">Cotizar con instalación</a>' +
           '</div>' +
         '</article>';

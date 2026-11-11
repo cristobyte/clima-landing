@@ -329,6 +329,7 @@ a.ct-btn--accent:hover { color: var(--ct-bg-wa) }
 .ct-prod__spacer { flex: 1; min-height: 14px; }
 .ct-prod__from { font-size: 13px; color: var(--ct-ink-3); }
 .ct-prod__price { font-family: var(--ct-font-head); font-size: 24px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 14px; }
+.ct-prod__from[hidden], .ct-prod__price[hidden] { display: none; }
 .ct-prod .ct-btn { font-size: 15px; padding: 12px 16px; border-radius: var(--ct-r-sm); }
 
 /* ---------- Confianza / fotos ---------- */

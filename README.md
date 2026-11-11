@@ -61,6 +61,8 @@ Ese archivo se genera, nunca se edita a mano.
    equipo ni de la instalación): lista todos los modelos del catálogo con la potencia
    recomendada (BTU, tipo y m² que cubre) e invita a cotizar por WhatsApp; el mensaje de
    WhatsApp lleva esos modelos, también sin precio.
+   Las **fichas de equipos** (`#equipos`) tienen el precio «Desde» **oculto, no borrado**:
+   se genera igual pero con `hidden`. Para volver a mostrarlo, `CT_CONFIG.preciosEnFichas: true`.
    **Precios instalados** — sección `#precios` de `index.html`: tres tarjetas (9.000, 12.000
    y 18.000 BTU, `data-ct-precio-btu`) y debajo qué incluye la instalación estándar y qué se
    cotiza aparte. Monto y modelo los pinta `app.js` desde `CT_CATALOGO`; los del markup son
