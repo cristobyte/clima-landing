@@ -62,6 +62,9 @@ Ese archivo se genera, nunca se edita a mano.
    WhatsApp. Su «Instalado desde» está **oculto, no borrado** (`[data-ct-pricebox]` con
    `hidden`, sin ocupar espacio) y el mensaje de WhatsApp va sin precio. Para volver a
    mostrarlo en ambos, `CT_CONFIG.preciosEnCalculadora: true`.
+   Los nombres de modelo se muestran con la potencia formateada (`nombreEquipo()`:
+   «Artik EVO 18000» → «Artik EVO 18.000 BTU») en la calculadora, las fichas y las tarjetas
+   de precios; en `CT_CATALOGO` se escriben como siempre.
    Las **fichas de equipos** (`#equipos`) tienen el precio «Desde» **oculto, no borrado**:
    se genera igual pero con `hidden`. Para volver a mostrarlo, `CT_CONFIG.preciosEnFichas: true`.
    **Precios instalados** — sección `#precios` de `index.html`: tres tarjetas (9.000, 12.000

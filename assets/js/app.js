@@ -111,7 +111,16 @@
     return CT_CATALOGO.filter(function (p) { return p.btu === btu; });
   }
 
-  function nombreEquipo(p) { return p.marca + " " + p.modelo; }
+  // Nombre para mostrar: la potencia del modelo va con separador de miles y «BTU»
+  // («Artik EVO 18000» → «Artik EVO 18.000 BTU»). CT_CATALOGO no cambia.
+  var RE_POTENCIA = /\b(\d{4,6})\b(\s*BTU)?/i;
+  function nombreEquipo(p) {
+    return p.marca + " " + String(p.modelo).replace(RE_POTENCIA, function (_, n) { return miles(Number(n)) + "\u00a0BTU"; });
+  }
+  // Sin la potencia, para cuando los BTU ya van al lado («18.000 BTU (Artik EVO, …)»).
+  function nombreSinPotencia(p) {
+    return (p.marca + " " + String(p.modelo).replace(RE_POTENCIA, "")).replace(/\s+/g, " ").trim();
+  }
 
   function escapar(t) {
     return String(t).replace(/[&<>"']/g, function (c) {
@@ -168,7 +177,7 @@
       elOpciones.innerHTML = r.excede
         ? item("Dos equipos o un cassette", "Se define en la visita técnica")
         : (opciones.length
-          ? opciones.map(function (p) { return item(nombreEquipo(p), miles(p.btu) + " BTU · " + p.tipo + " · hasta " + p.m2 + " m²"); }).join("")
+          ? opciones.map(function (p) { return item(nombreEquipo(p), p.tipo + " · hasta " + p.m2 + " m²"); }).join("")
           : item(miles(r.btu) + " BTU", "A pedido · lo conseguimos"));
     }
 
@@ -231,11 +240,11 @@
             '<p class="ct-prod__cover">BTU · cubre hasta ' + p.m2 + ' m²</p>' +
           '</div>' +
           '<div class="ct-prod__body">' +
-            '<h3 class="ct-prod__name">' + p.marca + " " + p.modelo + '</h3>' +
+            '<h3 class="ct-prod__name">' + nombreEquipo(p) + '</h3>' +
             '<div class="ct-prod__spacer"></div>' +
             '<p class="ct-prod__from"' + ocultarPrecio + '>Desde</p>' +
             '<p class="ct-prod__price"' + ocultarPrecio + '>' + precio + '</p>' +
-            '<a class="ct-btn ct-btn--blue" href="#cotizar" data-ct-equipo="' + p.marca + " " + p.modelo + '">Cotizar con instalación</a>' +
+            '<a class="ct-btn ct-btn--blue" href="#cotizar" data-ct-equipo="' + nombreEquipo(p) + '">Cotizar con instalación</a>' +
           '</div>' +
         '</article>';
     }).join("");
@@ -250,7 +259,7 @@
     if (!p || !p.instalado) return;
     var elPrecio = $("[data-ct-precio]", card), elModelo = $("[data-ct-precio-modelo]", card);
     if (elPrecio) elPrecio.textContent = clp(p.instalado);
-    if (elModelo) elModelo.textContent = p.marca + " " + p.modelo;
+    if (elModelo) elModelo.textContent = nombreEquipo(p);
   });
 
   if (elFiltros) {
@@ -371,7 +380,7 @@
     var precio = r.excede ? "" : precioVisibleCalculadora(masBarato(r.btu));
     var recomendacion = r.excede
       ? "más de 36.000 BTU, dos equipos o un cassette"
-      : miles(r.btu) + " BTU" + (opciones.length ? " (" + opciones.map(nombreEquipo).join(", ") + ")" : "") +
+      : miles(r.btu) + " BTU" + (opciones.length ? " (" + opciones.map(nombreSinPotencia).join(", ") + ")" : "") +
         (precio ? ", desde " + precio + " instalado" : "");
 
     return [
