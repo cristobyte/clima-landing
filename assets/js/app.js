@@ -16,6 +16,9 @@
     // Fichas de equipos (#equipos): el precio «Desde» sigue en el markup y en CT_CATALOGO,
     // solo queda oculto. Para volver a mostrarlo, poner true.
     preciosEnFichas: false,
+    // Resultado de la calculadora: el «Instalado desde» se calcula y queda en el markup,
+    // pero oculto, y el mensaje de WhatsApp va sin precio. Para mostrarlo, poner true.
+    preciosEnCalculadora: false,
     moneda: "es-CL"
   };
 
@@ -83,16 +86,27 @@
     return { bruto: bruto, btu: btu || 36000, excede: bruto > 36000 };
   }
 
-  // Equipo mas barato instalado de una potencia: respalda las tarjetas de precios.
+  // Equipo mas barato instalado de una potencia: respalda el «desde» del resultado, de
+  // su mensaje de WhatsApp y de las tarjetas de precios.
   function masBarato(btu) {
     var orden = function (p) { return p.instalado || Number.MAX_VALUE; };
     return CT_CATALOGO.filter(function (p) { return p.btu === btu; })
       .sort(function (a, b) { return orden(a) - orden(b); })[0] || null;
   }
 
-  // Equipos del catalogo para una potencia, en el orden del catalogo. La calculadora
-  // solo recomienda modelo y BTU: ni precio del equipo ni de la instalacion, que se
-  // cotizan por WhatsApp segun cada caso.
+  // Solo se promete precio si el equipo lo trae y Ajustes deja mostrarlo.
+  function precioInstalado(p) {
+    return p && p.instalado && CT_CONFIG.mostrarPrecios ? clp(p.instalado) : "";
+  }
+
+  // Precio que se ve en el resultado y viaja en su WhatsApp: vacio mientras
+  // preciosEnCalculadora este apagado.
+  function precioVisibleCalculadora(p) {
+    return CT_CONFIG.preciosEnCalculadora ? precioInstalado(p) : "";
+  }
+
+  // Equipos del catalogo para una potencia, en el orden del catalogo. Es lo que la
+  // calculadora recomienda: modelo y BTU.
   function opcionesEquipo(btu) {
     return CT_CATALOGO.filter(function (p) { return p.btu === btu; });
   }
@@ -157,6 +171,14 @@
           ? opciones.map(function (p) { return item(nombreEquipo(p), miles(p.btu) + " BTU · " + p.tipo + " · hasta " + p.m2 + " m²"); }).join("")
           : item(miles(r.btu) + " BTU", "A pedido · lo conseguimos"));
     }
+
+    // Precio: se calcula y se escribe siempre; solo se ve con preciosEnCalculadora.
+    var reco = r.excede ? null : masBarato(r.btu);
+    var precio = precioInstalado(reco);
+    var elPrice = $("[data-ct-price]"), elModel = $("[data-ct-model]"), elPriceBox = $("[data-ct-pricebox]");
+    if (elPrice) elPrice.textContent = precio;
+    if (elModel) elModel.textContent = reco ? "Con " + nombreEquipo(reco) : "";
+    if (elPriceBox) elPriceBox.hidden = !(precio && CT_CONFIG.preciosEnCalculadora);
 
     var m2Input = $("#f-m2");
     if (m2Input && !m2Input.value) m2Input.placeholder = String(state.m2);
@@ -346,9 +368,11 @@
 
     var r = calcular(state.m2);
     var opciones = r.excede ? [] : opcionesEquipo(r.btu);
+    var precio = r.excede ? "" : precioVisibleCalculadora(masBarato(r.btu));
     var recomendacion = r.excede
       ? "más de 36.000 BTU, dos equipos o un cassette"
-      : miles(r.btu) + " BTU" + (opciones.length ? " (" + opciones.map(nombreEquipo).join(", ") + ")" : "");
+      : miles(r.btu) + " BTU" + (opciones.length ? " (" + opciones.map(nombreEquipo).join(", ") + ")" : "") +
+        (precio ? ", desde " + precio + " instalado" : "");
 
     return [
       "Hola ClimaTecnología, usé la calculadora de su web:",

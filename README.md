@@ -57,10 +57,11 @@ Ese archivo se genera, nunca se edita a mano.
    `m2`, `desde`, `instalado`, `tipo`). `desde` es el equipo solo e `instalado` la variante
    «Con instalación» de la tienda. **Es la única fuente de precios**: el equipo con menor
    `instalado` de cada potencia es el «desde» de las tarjetas de precios. Si cambian los
-   precios en WooCommerce, se cambian aquí. La **calculadora no muestra precios** (ni del
-   equipo ni de la instalación): lista todos los modelos del catálogo con la potencia
-   recomendada (BTU, tipo y m² que cubre) e invita a cotizar por WhatsApp; el mensaje de
-   WhatsApp lleva esos modelos, también sin precio.
+   precios en WooCommerce, se cambian aquí. La **calculadora** lista todos los modelos del
+   catálogo con la potencia recomendada (BTU, tipo y m² que cubre) e invita a cotizar por
+   WhatsApp. Su «Instalado desde» está **oculto, no borrado** (`[data-ct-pricebox]` con
+   `hidden`, sin ocupar espacio) y el mensaje de WhatsApp va sin precio. Para volver a
+   mostrarlo en ambos, `CT_CONFIG.preciosEnCalculadora: true`.
    Las **fichas de equipos** (`#equipos`) tienen el precio «Desde» **oculto, no borrado**:
    se genera igual pero con `hidden`. Para volver a mostrarlo, `CT_CONFIG.preciosEnFichas: true`.
    **Precios instalados** — sección `#precios` de `index.html`: tres tarjetas (9.000, 12.000
