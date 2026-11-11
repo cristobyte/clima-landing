@@ -56,16 +56,18 @@ Ese archivo se genera, nunca se edita a mano.
 2. **Catálogo de equipos** — `CT_CATALOGO` en el mismo archivo (`marca`, `modelo`, `btu`,
    `m2`, `desde`, `instalado`, `tipo`). `desde` es el equipo solo e `instalado` la variante
    «Con instalación» de la tienda. **Es la única fuente de precios**: el equipo con menor
-   `instalado` de cada potencia es el «desde» del resultado de la calculadora, de su
-   mensaje de WhatsApp y de las tarjetas de precios. Si cambian los precios en WooCommerce,
-   se cambian aquí.
+   `instalado` de cada potencia es el «desde» de las tarjetas de precios. Si cambian los
+   precios en WooCommerce, se cambian aquí. La **calculadora no muestra precios** (ni del
+   equipo ni de la instalación): lista todos los modelos del catálogo con la potencia
+   recomendada (BTU, tipo y m² que cubre) e invita a cotizar por WhatsApp; el mensaje de
+   WhatsApp lleva esos modelos, también sin precio.
    **Precios instalados** — sección `#precios` de `index.html`: tres tarjetas (9.000, 12.000
    y 18.000 BTU, `data-ct-precio-btu`) y debajo qué incluye la instalación estándar y qué se
    cotiza aparte. Monto y modelo los pinta `app.js` desde `CT_CATALOGO`; los del markup son
    el respaldo sin JS (mantenerlos iguales). El botón de cada tarjeta abre WhatsApp con la
    potencia y el precio (`[data-ct-plan]` + `[data-ct-precio]`) y llega a GA4 como
    `method: whatsapp_precios` con `plan`. El interruptor *Precios* de Ajustes oculta esta
-   sección y su enlace del menú, y quita el precio del resultado de la calculadora.
+   sección y su enlace del menú.
 3. **Fotos reales** — `assets/img/instalacion-1.jpg`, `-2.jpg`, `-3.jpg`. Si el archivo no
    existe, la tarjeta muestra un marcador punteado con la descripción de la foto que falta.
 4. **Datos de contacto y horario** — en `index.html`, sección `#cotizar`.

@@ -80,17 +80,26 @@
     return { bruto: bruto, btu: btu || 36000, excede: bruto > 36000 };
   }
 
-  // Equipo mas barato instalado de una potencia: respalda el «desde» del resultado, de
-  // su mensaje de WhatsApp y de las tarjetas de precios.
+  // Equipo mas barato instalado de una potencia: respalda las tarjetas de precios.
   function masBarato(btu) {
     var orden = function (p) { return p.instalado || Number.MAX_VALUE; };
     return CT_CATALOGO.filter(function (p) { return p.btu === btu; })
       .sort(function (a, b) { return orden(a) - orden(b); })[0] || null;
   }
 
-  // Solo se promete precio si el equipo lo trae y Ajustes deja mostrarlo.
-  function precioInstalado(p) {
-    return p && p.instalado && CT_CONFIG.mostrarPrecios ? clp(p.instalado) : "";
+  // Equipos del catalogo para una potencia, en el orden del catalogo. La calculadora
+  // solo recomienda modelo y BTU: ni precio del equipo ni de la instalacion, que se
+  // cotizan por WhatsApp segun cada caso.
+  function opcionesEquipo(btu) {
+    return CT_CATALOGO.filter(function (p) { return p.btu === btu; });
+  }
+
+  function nombreEquipo(p) { return p.marca + " " + p.modelo; }
+
+  function escapar(t) {
+    return String(t).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
   }
 
   /* ---------- 4. Calculadora ---------- */
@@ -122,23 +131,30 @@
     if (elDisclaimer) elDisclaimer.hidden = !enResultado;
     if (!enResultado) { pintarWhats(); return; }
 
-    var reco = r.excede ? null : masBarato(r.btu);
-    var precio = precioInstalado(reco);
+    var opciones = r.excede ? [] : opcionesEquipo(r.btu);
     var textos = {
       "[data-ct-btu]": (r.excede ? "+" : "") + miles(r.btu),
       "[data-ct-resumen]": r.excede
         ? "Para " + state.m2 + " m² con este uso conviene dividir la carga en dos equipos o un cassette. Lo definimos en la visita técnica."
         : "Para " + state.m2 + " m² con " + SOL[state.sol].label.toLowerCase() + " y uso de " + USO[state.uso].label.toLowerCase() + ", esta es la potencia mínima que rinde sin trabajar al límite.",
-      "[data-ct-price-label]": precio ? "Instalado desde" : (r.excede ? "Solución sugerida" : "Equipo sugerido"),
-      "[data-ct-price]": precio,
-      "[data-ct-model]": r.excede ? "Dos equipos o un cassette · se define en la visita técnica"
-        : (reco ? reco.marca + " " + reco.modelo + " · cubre hasta " + reco.m2 + " m²" : miles(r.btu) + " BTU a pedido · lo conseguimos")
+      "[data-ct-options-label]": r.excede ? "Solución sugerida"
+        : (opciones.length > 1 ? "Equipos recomendados" : "Equipo recomendado")
     };
     Object.keys(textos).forEach(function (sel) { var el = $(sel); if (el) el.textContent = textos[sel]; });
-    var elPrice = $("[data-ct-price]");
-    if (elPrice) elPrice.hidden = !precio;
 
-    state.equipoElegido = reco && !r.excede ? reco.marca + " " + reco.modelo : "";
+    var elOpciones = $("[data-ct-options]");
+    if (elOpciones) {
+      var item = function (nombre, meta) {
+        return '<li class="ct-result__option"><span class="ct-result__option-name">' + escapar(nombre) + '</span>' +
+               '<span class="ct-result__option-meta">' + escapar(meta) + '</span></li>';
+      };
+      elOpciones.innerHTML = r.excede
+        ? item("Dos equipos o un cassette", "Se define en la visita técnica")
+        : (opciones.length
+          ? opciones.map(function (p) { return item(nombreEquipo(p), miles(p.btu) + " BTU · " + p.tipo + " · hasta " + p.m2 + " m²"); }).join("")
+          : item(miles(r.btu) + " BTU", "A pedido · lo conseguimos"));
+    }
+
     var m2Input = $("#f-m2");
     if (m2Input && !m2Input.value) m2Input.placeholder = String(state.m2);
     pintarPreview();
@@ -319,18 +335,16 @@
   // va todo lo que ya sabemos, una linea por dato, para que el tecnico pueda cotizar sin
   // volver a preguntar. Sale de las mismas etiquetas, equipo y precio que pinta el
   // resultado, asi el mensaje no puede divergir de lo que el visitante tiene a la vista.
+  // Sin precios: se cotiza en la conversacion.
   function mensajeWhatsApp() {
     var base = "Hola ClimaTecnología, necesito más información.";
     if (pasosMode && state.paso < 3) return base;
 
     var r = calcular(state.m2);
-    var reco = r.excede ? null : masBarato(r.btu);
-    var precio = precioInstalado(reco);
+    var opciones = r.excede ? [] : opcionesEquipo(r.btu);
     var recomendacion = r.excede
       ? "más de 36.000 BTU, dos equipos o un cassette"
-      : miles(r.btu) + " BTU" + (reco
-        ? " (" + reco.marca + " " + reco.modelo + (precio ? ", desde " + precio + " instalado" : "") + ")"
-        : "");
+      : miles(r.btu) + " BTU" + (opciones.length ? " (" + opciones.map(nombreEquipo).join(", ") + ")" : "");
 
     return [
       "Hola ClimaTecnología, usé la calculadora de su web:",
